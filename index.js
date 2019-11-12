@@ -11,7 +11,6 @@ const Discord = require('discord.js');
 const { Client, RichEmbed, Message } = require('discord.js');
 
 const bot = new Client();
-const embed = new RichEmbed();
 const message = new Message();
 
 /**
@@ -62,6 +61,8 @@ bot.on('message', msg => {
 
     // If command does not exist, return
     if (!bot.commands.has(command)) return;
+
+    var embed = new RichEmbed();
 
     // Try performing the command
     try {
