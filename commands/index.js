@@ -3,4 +3,5 @@ module.exports = {
     Day: require('./day'),
     Weather: require('./weather'),
     Commands: require('./commands'),
+    Dice: require('./dice'),
 };
