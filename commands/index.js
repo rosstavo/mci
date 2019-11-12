@@ -1,3 +1,4 @@
 module.exports = {
-    Ping: require('./ping'),
+    Request: require('./request'),
+    Day: require('./day'),
 };
