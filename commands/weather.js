@@ -13,7 +13,11 @@ module.exports = {
 
 		var today = weather[Math.floor(Math.random()*weather.length)];
 
-        msg.channel.send( `The weather in the Loamy Cape today is ${today}.` );
+		embed.setTitle('What\'s the weather like today?')
+			.setColor(0xBBBBBB)
+			.setDescription( `The weather in the Loamy Cape today is ${today}.` );
+
+		msg.channel.send( embed );
 
 	},
 };
