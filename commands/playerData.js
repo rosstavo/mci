@@ -61,6 +61,11 @@ module.exports = {
 					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP until they level up.` )
 					.addField( 'Sessions played', found['Sessions'], false )
 					.addField( 'Days since last session', found['Days since last session'], false );
+
+				if ( found['Portrait'] !== '' ) {
+					embed.setThumbnail( found['Portrait'] );
+				}
+
 			}
 
 			msg.channel.send( embed );
