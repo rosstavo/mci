@@ -4,18 +4,23 @@ module.exports = {
 	execute(msg, args, embed) {
 
 		var weather = [
-			'foggy',
-			'very foggy',
-			'like pea soup',
-			'just like yesterday… foggy',
-			'misty, very thick mist. Like fog',
+			'The weather in the Loamy Cape today is foggy.',
+			'The weather in the Loamy Cape today is very foggy.',
+			'The weather in the Loamy Cape today is like pea soup.',
+			'The weather in the Loamy Cape today is just like yesterday… foggy.',
+			'The weather in the Loamy Cape today is misty, very thick mist. Like fog.',
+			'It’s a beautiful day, but you can’t tell because of all the fog.',
+			'Today’s weather has been cancelled due to abyssal fog all over the damn place. Replacement wind and rain services are unavailable.',
+			'Yeah, it’s still foggy.',
+			'Did someone spill grey paint on your glasses? Nope, that’s just the fog.',
+			':fog::fog::fog::fog::fog:',
 		];
 
 		var today = weather[Math.floor(Math.random()*weather.length)];
 
 		embed.setTitle('What\'s the weather like today?')
 			.setColor(0xBBBBBB)
-			.setDescription( `The weather in the Loamy Cape today is ${today}.` );
+			.setDescription( today );
 
 		msg.channel.send( embed );
 
