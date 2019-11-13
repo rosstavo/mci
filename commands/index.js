@@ -4,4 +4,5 @@ module.exports = {
     Weather: require('./weather'),
     Commands: require('./commands'),
     Dice: require('./dice'),
+    Safeword: require('./safeword'),
 };
