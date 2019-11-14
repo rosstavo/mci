@@ -57,13 +57,18 @@ module.exports = {
 
 			if ( found && found['Player'] !== '' ) {
 
-				embed.setTitle( `Info on ${ found['Player'] }` )
+				embed.setAuthor( 'Player Info' )
+					.setTitle( found['Player'] )
 					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP until they level up.` )
 					.addField( 'Sessions played', found['Sessions'], false )
 					.addField( 'Days since last session', found['Days since last session'], false );
 
 				if ( found['Portrait'] !== '' ) {
 					embed.setThumbnail( found['Portrait'] );
+				}
+
+				if ( found['dndbeyond'] !== '' ) {
+					embed.setURL( found['dndbeyond'] );
 				}
 
 			}
