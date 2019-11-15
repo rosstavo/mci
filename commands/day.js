@@ -1,5 +1,5 @@
 module.exports = {
-	name: '!day',
+	name: '&day',
 	description: 'This command returns the day.',
 	execute(msg, args, embed) {
 

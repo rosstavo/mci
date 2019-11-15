@@ -1,5 +1,5 @@
 module.exports = {
-	name: '!request',
+	name: '&request',
 	description: 'This command creates a request for the Dungeon Masters.',
 	execute(msg, args, embed) {
 
