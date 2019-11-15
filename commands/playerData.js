@@ -52,7 +52,7 @@ module.exports = {
 			} );
 
 			embed.setTitle( 'No player found.' )
-				.setColor(0xBBBBBB)
+				.setColor(0xf2edd8)
 				.setDescription( 'Sorry, we could not find a character by that name.' );
 
 			if ( found && found['Player'] !== '' ) {

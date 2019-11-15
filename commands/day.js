@@ -44,7 +44,7 @@ module.exports = {
 		var dt = new Date();
 
 		embed.setTitle('What day is it today?')
-			.setColor(0xBBBBBB)
+			.setColor(0xf2edd8)
 			.setDescription( `Today (${days[dt.getDay()][0]}), the daylight hours are named ${days[dt.getDay()][1]}. Once the Sun has set, the night is named ${days[dt.getDay()][2]}.` );
 
 		msg.channel.send( embed );
