@@ -5,5 +5,5 @@ module.exports = {
     Commands: require('./commands'),
     Dice: require('./dice'),
     Safeword: require('./safeword'),
-    PlayerData: require('./playerData'),
+    CharacterData: require('./characterData'),
 };

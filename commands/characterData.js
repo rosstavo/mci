@@ -1,6 +1,6 @@
 module.exports = {
-	name: '!player',
-	description: 'This command lists commands.',
+	name: '!character',
+	description: 'This command displays character information.',
 	execute(msg, args, embed) {
 
 		if ( ! args[0] ) {
@@ -47,22 +47,34 @@ module.exports = {
 				"header": true
 			} );
 
+			var query = msg.mentions.users.firstKey();
+
+			var key = 'Player';
+
+			if ( query ) {
+				key = 'Discord';
+			} else {
+				query = args[0].toLowerCase().replace(/ /g,'');
+			}
+
+			console.log( query );
+
 			var found = data.data.find( function(el) {
-				return el["Player"].toLowerCase().replace(/ /g,'') === args[0].toLowerCase().replace(/ /g,'');
+				return el[key].toLowerCase().replace(/ /g,'') === query;
 			} );
 
-			embed.setTitle( 'No player found.' )
+			embed.setTitle( 'No character found.' )
 				.setColor(0xf2edd8)
 				.setDescription( 'Sorry, we could not find a character by that name.' );
 
 			if ( found && found['Player'] !== '' ) {
 
-				embed.setAuthor( 'Player Info' )
+				embed.setAuthor( 'Character Info' )
 					.setTitle( found['Player'] )
 					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.` );
 
-				if ( found['Pronouns'] !== '' ) {
-					embed.addField( 'Character pronouns', found['Pronouns'], true );
+				if ( found['Character pronouns'] !== '' ) {
+					embed.addField( 'Character pronouns', found['Character pronouns'], true );
 				}
 
 				if ( found['Sessions'] !== '' ) {
@@ -79,6 +91,10 @@ module.exports = {
 
 				if ( found['dndbeyond'] !== '' ) {
 					embed.setURL( found['dndbeyond'] );
+				}
+
+				if ( found['Discord'] !== '' && found['Player pronouns'] !== '' ) {
+					embed.addField( 'Player', `<@${found['Discord']}> (${found['Player pronouns']})`, true );
 				}
 
 			}
