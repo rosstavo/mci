@@ -1,5 +1,5 @@
 module.exports = {
-	name: '&dice',
+	name: '!dice',
 	description: 'This command shows common dice formatting queries.',
 	execute(msg, args, embed) {
 

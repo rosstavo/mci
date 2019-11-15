@@ -1,6 +1,6 @@
 module.exports = {
-	name: '&character',
-	aliases: ['&player'],
+	name: '!character',
+	aliases: ['!player'],
 	args: true,
 	description: 'This command displays character information.',
 	execute(msg, args, embed) {

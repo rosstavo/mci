@@ -1,5 +1,5 @@
 module.exports = {
-	name: '&weather',
+	name: '!weather',
 	description: 'This command returns how foggy it is.',
 	execute(msg, args, embed) {
 
