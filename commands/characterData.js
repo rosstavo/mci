@@ -49,21 +49,31 @@ module.exports = {
 				"header": true
 			} );
 
-			var query = msg.mentions.users.firstKey();
-
-			var key = 'Player';
-
-			if ( query ) {
-				key = 'Discord';
-			} else {
-				query = args[0].toLowerCase().replace(/ /g,'');
-			}
-
-			console.log( query );
-
 			var found = data.data.find( function(el) {
-				return el[key].toLowerCase().replace(/ /g,'') === query;
+
+				if ( msg.mentions.users.firstKey() ) {
+					return el['Discord'] === msg.mentions.users.firstKey();
+				}
+
+				return el['Player'].toLowerCase().replace(/ /g,'') === args.join('').toLowerCase();
+
 			} );
+
+			if ( ! found ) {
+
+				found = data.data.find( function(el) {
+
+					if ( el['Names'] == '' ) {
+						return false;
+					}
+
+					return JSON.parse( el['Names'] ).find( function(el) {
+						return el.toLowerCase().replace(/ /g,'') === args.join('').toLowerCase();
+					} );
+
+				} );
+
+			}
 
 			embed.setTitle( 'No character found.' )
 				.setColor(0xf2edd8)
@@ -74,8 +84,18 @@ module.exports = {
 				embed.setTitle( `Character Info: ${found['Player']}` )
 					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.` );
 
+				if ( found['Names'] !== '' ) {
+					embed.addField( 'Also known as', JSON.parse( found['Names'] ).filter( function(el) {
+						return el !== found['Player'];
+					} ).join(', '), true );
+				}
+
 				if ( found['Character pronouns'] !== '' ) {
 					embed.addField( 'Character pronouns', found['Character pronouns'], true );
+				}
+
+				if ( found['Discord'] !== '' && found['Player pronouns'] !== '' ) {
+					embed.addField( 'Player', `<@${found['Discord']}> (${found['Player pronouns']})`, false );
 				}
 
 				if ( found['Sessions'] !== '' ) {
@@ -92,10 +112,6 @@ module.exports = {
 
 				if ( found['dndbeyond'] !== '' ) {
 					embed.setURL( found['dndbeyond'] );
-				}
-
-				if ( found['Discord'] !== '' && found['Player pronouns'] !== '' ) {
-					embed.addField( 'Player', `<@${found['Discord']}> (${found['Player pronouns']})`, true );
 				}
 
 			}
