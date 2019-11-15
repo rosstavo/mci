@@ -6,7 +6,7 @@ module.exports = {
 		msg.delete();
 
 		embed.setTitle('Note: A user just used the safe word')
-			.setColor(0xf6e58d)
+			.setColor(0xe67e22)
 			.setDescription( 'Please be respectful and draw this conversation to a close. If you’d like to debrief, please feel free to do so over in #the-feels. If anything needs resolving, please notify a @dm.' )
 			.setFooter( 'This was called via the !safeword command. The message calling the command has been deleted.' );
 

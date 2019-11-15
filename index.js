@@ -77,8 +77,8 @@ bot.on('message', message => {
 
     var embed = new RichEmbed();
 
-    embed.setAuthor( 'MESSAGE SENT FROM: PVT. HELPER', 'https://liturgistsrpg.com/imgs/helper.png' )
-        .setFooter( '[This message is encrypted and can\'t be read without a cypher.]' );
+    embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
+        .setFooter( '[This message is encrypted and cannot be read without a cypher.]' );
 
     // Try performing the command
     try {
