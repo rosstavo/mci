@@ -71,8 +71,7 @@ module.exports = {
 
 			if ( found && found['Player'] !== '' ) {
 
-				embed.setAuthor( 'Character Info' )
-					.setTitle( found['Player'] )
+				embed.setTitle( `Character Info: ${found['Player']}` )
 					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.` );
 
 				if ( found['Character pronouns'] !== '' ) {
