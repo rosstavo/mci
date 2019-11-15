@@ -45,31 +45,43 @@ bot.on('ready', () => {
 /**
  * On a new message, perform a command if it exists
  */
-bot.on('message', msg => {
+bot.on('message', message => {
 
-    if ( msg.author.id === bot.user.id ) {
+    if ( message.author.id === bot.user.id ) {
         return;
     }
 
-    const args = msg.content.split(/ +/);
-    var command = args.shift().toLowerCase();
+	const args = message.content.split(/ +/);
+	const commandName = args.shift().toLowerCase();
 
-    if ( msg.channel.id === '643803011331784725' ) {
-        command = '!request';
-    }
+	const command = bot.commands.get(commandName)
+		|| bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    console.info(`Called command: ${command}`);
+	if (!command) return;
 
-    // If command does not exist, return
-    if (!bot.commands.has(command)) return;
+	if (command.guildOnly && message.channel.type !== 'text') {
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
+
+		return message.channel.send(reply);
+	}
+
+    console.log( command );
 
     var embed = new RichEmbed();
 
     // Try performing the command
     try {
-        bot.commands.get(command).execute(msg, args, embed);
+        command.execute(message, args, embed);
     } catch (error) {
         console.error(error);
-        msg.reply('There was an error trying to execute that command!');
+        message.reply('There was an error trying to execute that command!');
     }
 });
