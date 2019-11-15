@@ -59,9 +59,19 @@ module.exports = {
 
 				embed.setAuthor( 'Player Info' )
 					.setTitle( found['Player'] )
-					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP until they level up.` )
-					.addField( 'Sessions played', found['Sessions'], false )
-					.addField( 'Days since last session', found['Days since last session'], false );
+					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.` );
+
+				if ( found['Pronouns'] !== '' ) {
+					embed.addField( 'Character pronouns', found['Pronouns'], true );
+				}
+
+				if ( found['Sessions'] !== '' ) {
+					embed.addField( 'Sessions played', found['Sessions'], true );
+				}
+
+				if ( found['Days since last session'] !== '' ) {
+					embed.addField( 'Days since last session', found['Days since last session'], true );
+				}
 
 				if ( found['Portrait'] !== '' ) {
 					embed.setThumbnail( found['Portrait'] );
