@@ -1,6 +1,6 @@
 module.exports = {
 	name: '!downtime',
-	description: 'This command shows common dice formatting queries.',
+	description: 'This command shows downtime activities.',
 	execute(msg, args, embed) {
 
 		var activities = {
