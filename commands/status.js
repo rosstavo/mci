@@ -38,8 +38,8 @@ module.exports = {
 		const giphy = {
 			baseURL: "https://api.giphy.com/v1/gifs/",
 			apiKey: "2iZ2VootxkPQFWDOpKFhAuwFEEbMc0MO",
-			tag: "robotics",
-			type: "random",
+			tag: "robot",
+			type: "search",
 			rating: "pg-13"
 		};
 
@@ -49,7 +49,7 @@ module.exports = {
 				giphy.type +
 				"?api_key=" +
 				giphy.apiKey +
-				"&tag=" +
+				"&q=" +
 				giphy.tag +
 				"&rating=" +
 				giphy.rating
@@ -58,11 +58,18 @@ module.exports = {
 
 		(async (url) => {
 
-			var gif = await getScript(url);
+			var gifs = await getScript(url);
+
+			var gifsData = JSON.parse(gifs).data;
+
+			var image = gifsData[Math.floor(Math.random()*gifsData.length)];
+
+			console.log( image );
+
 
 			embed.setDescription( '```> CONNECTING TO DIRECT FEED.......DONE\n>\n> RETRIEVED FOOTAGE OF INT.OFF. “HELPER”:```' );
 
-			embed.setImage( JSON.parse(gif).data.image_original_url );
+			embed.setImage( image.images.original.url );
 
 			msg.channel.send( embed );
 
