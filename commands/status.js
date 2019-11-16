@@ -60,6 +60,8 @@ module.exports = {
 
 			var gif = await getScript(url);
 
+			embed.setDescription( '```> CONNECTING TO DIRECT FEED.......DONE\n>\n> RETRIEVED FOOTAGE OF INT.OFF. “HELPER”:```' );
+
 			embed.setImage( JSON.parse(gif).data.image_original_url );
 
 			msg.channel.send( embed );
