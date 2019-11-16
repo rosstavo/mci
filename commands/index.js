@@ -7,4 +7,5 @@ module.exports = {
     Safeword: require('./safeword'),
     CharacterData: require('./characterData'),
     Downtime: require('./downtime'),
+    Helper: require('./status'),
 };
