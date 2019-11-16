@@ -38,7 +38,7 @@ module.exports = {
 		const giphy = {
 			baseURL: "https://api.giphy.com/v1/gifs/",
 			apiKey: "2iZ2VootxkPQFWDOpKFhAuwFEEbMc0MO",
-			tag: "robot",
+			tag: "robotics",
 			type: "random",
 			rating: "pg-13"
 		};
