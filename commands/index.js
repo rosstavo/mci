@@ -6,4 +6,5 @@ module.exports = {
     Dice: require('./dice'),
     Safeword: require('./safeword'),
     CharacterData: require('./characterData'),
+    Downtime: require('./downtime'),
 };

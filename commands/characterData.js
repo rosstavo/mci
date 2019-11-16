@@ -76,8 +76,7 @@ module.exports = {
 			}
 
 			embed.setTitle( 'No character found.' )
-				.setColor(0xf2edd8)
-				.setDescription( 'Sorry, we could not find a character by that name.' );
+				.setDescription( 'Sorry, I could not find a character by that name.' );
 
 			if ( found && found['Player'] !== '' ) {
 

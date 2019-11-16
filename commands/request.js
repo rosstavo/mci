@@ -10,7 +10,6 @@ module.exports = {
 		msg.delete();
 
 		embed.setTitle(`New request from ${ msg.author.username }`)
-			.setColor(0xf2edd8)
 			.setDescription( msg.content )
 			.setTimestamp( msg.createdTimestamp );
 

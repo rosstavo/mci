@@ -19,7 +19,6 @@ module.exports = {
 		var today = weather[Math.floor(Math.random()*weather.length)];
 
 		embed.setTitle('What\'s the weather like today?')
-			.setColor(0xf2edd8)
 			.setDescription( today );
 
 		msg.channel.send( embed );

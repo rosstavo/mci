@@ -4,7 +4,6 @@ module.exports = {
 	execute(msg, args, embed) {
 
 		embed.setTitle( 'List of commands' )
-			.setColor(0xf2edd8)
 			.addField( '!commands', 'This is the command you just did.' )
 			.addField( '!day', 'Returns the in-Universe day.' )
 			.addField( '!weather', 'Is it foggy? Try this command and see!' )
