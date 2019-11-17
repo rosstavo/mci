@@ -8,4 +8,5 @@ module.exports = {
     CharacterData: require('./characterData'),
     Downtime: require('./downtime'),
     Helper: require('./status'),
+    SessionData: require('./sessionData'),
 };
