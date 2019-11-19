@@ -80,13 +80,16 @@ module.exports = {
 
 			if ( found && found['Player'] !== '' ) {
 
-				embed.setTitle( `Character Info: ${found['Player']}` )
-					.setDescription( `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.` );
+				embed.setTitle( `Character Info: ${found['Player']}` );
 
 				if ( found['Names'] !== '' ) {
 					embed.addField( 'Also known as', JSON.parse( found['Names'] ).filter( function(el) {
 						return el !== found['Player'];
 					} ).join(', '), true );
+				}
+
+				if ( found['Summary'] !== '' ) {
+					embed.setDescription( found['Summary'] );
 				}
 
 				if ( found['Character pronouns'] !== '' ) {
@@ -96,6 +99,8 @@ module.exports = {
 				if ( found['Discord'] !== '' && found['Player pronouns'] !== '' ) {
 					embed.addField( 'Player', `<@${found['Discord']}> (${found['Player pronouns']})`, false );
 				}
+
+				embed.addField( 'Stats', `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.`, false );
 
 				if ( found['Sessions'] !== '' ) {
 					embed.addField( 'Sessions played', found['Sessions'], true );
