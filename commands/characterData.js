@@ -75,9 +75,6 @@ module.exports = {
 
 			}
 
-			embed.setTitle( 'No character found.' )
-				.setDescription( 'Sorry, I could not find a character by that name.' );
-
 			if ( found && found['Player'] !== '' ) {
 
 				embed.setTitle( `Character Info: ${found['Player']}` );
@@ -103,7 +100,11 @@ module.exports = {
 				embed.addField( 'Stats', `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.`, false );
 
 				if ( found['Sessions'] !== '' ) {
-					embed.addField( 'Sessions played', found['Sessions'], true );
+					embed.addField( 'Sessions played in total', found['Sessions'], true );
+				}
+
+				if ( found['Days since first session'] !== '' ) {
+					embed.addField( 'Days since first session', found['Days since first session'], true );
 				}
 
 				if ( found['Days since last session'] !== '' ) {
@@ -118,6 +119,9 @@ module.exports = {
 					embed.setURL( found['dndbeyond'] );
 				}
 
+			} else {
+				embed.setTitle( 'No character found.' )
+					.setDescription( 'Sorry, I could not find a character by that name.' );
 			}
 
 			msg.channel.send( embed );
