@@ -25,6 +25,10 @@ module.exports = {
 				"title": "Hunting",
 				"description": "There are a variety of animals to hunt in the Loamy Cape and beyond. The instructions below are for a single day spent hunting. To determine how successful your hunt is, make two rolls, the first of which is a Wisdom (Survival) check to find tracks.\n\n**Roll – Result**\n0 or above - No tracks found\n10 or above - Found Common creature tracks\n15 or above - Found Uncommon creature tracks\n20 or above - Found Rare creature tracks\n25 or above - Found Very Rare creature tracks\n30 or above - Found Legendary creature tracks\n\nOnce you’re on the trail of a creature, in order to kill it, make a special Dexterity (Hunting) check, where you can add your proficiency bonus if you have a proficiency with any ranged weapon. The DC of the roll corresponds to the creature’s armor class, which depends on its rarity, per the table below.\n\n**Rarity – DC/AC**\nCommon – 5\nUncommon – 10\nRare – 15\nVery Rare – 20\nLegendary – 25\n\nIf you manage to hit the creature with your attack, you succeed in killing it, otherwise it is spooked and runs away.\n\nYou can retain the parts harvested from the creature for use in crafting, or you can sell the parts to one of the institutions in the Loamy Cape. Below is a guide for the amount of gold earned.\n\n**Rarity – Worth**\nCommon – 5 gp\nUncommon – 10 gp\nRare – 25 gp\nVery Rare – 50 gp\nLegendary – 100 gp"
 			},
+			"pitfighting": {
+				"title": "Pit Fighting",
+				"description": "Pit fighting includes boxing, wrestling, and other nonlethal forms of combat in an organized setting with predetermined matches. The character must make a series of checks, with a DC determined at random based on the quality of the opposition that the character runs into. A big part of the challenge in pit fighting lies in the unknown nature of a character’s opponents.\n\nThe character makes three checks: Strength (Athletics), Dexterity (Acrobatics), and a special Constitution check that has a bonus equal to a roll of the character’s largest Hit Die (this roll doesn’t spend that die). If desired, the character can replace one of these skill checks with an attack roll using one of the character’s weapons. The DC for each of the checks is 5 + 2d10; generate a separate DC for each one. Consult the table below to see how the character did.\n\n**Result – Value**\n0 successes – Lose your bouts, earning nothing\n1 success – Win 12.5 gp\n2 successes – Win 20 gp\n3 successes – Win 40 gp"
+			},
 		};
 
 		if ( ! args.length ) {
@@ -38,6 +42,7 @@ module.exports = {
 				.addField( 'Crafting', '`!downtime crafting`', true )
 				.addField( 'Inspiring', '`!downtime inspiring`', true )
 				.addField( 'Hunting', '`!downtime hunting`', true )
+				.addField( 'Pit Fighting', '`!downtime pitfighting`', true )
 				.addBlankField( true );
 
 		} else {
