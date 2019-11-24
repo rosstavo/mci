@@ -31,7 +31,7 @@ module.exports = {
 			},
 			"training": {
 				"title": "Training",
-				"description": "You can spend time between adventures learning a new proficiency. The training lasts for 10 weeks reduced by a number of weeks equal to your Intelligence modifier, and absorbs your passive income. After you spend the requisite amount of time and money, you gain the new proficiency.\n\n**Eureka Moments.** Every day you spend training, you can roll a d20. On a 20, you have a eureka moment, and your learning advances 2 weeks."
+				"description": "You can spend time between adventures learning a new language or tool proficiency. The training lasts for a period of time according to your Intelligence modifier as per the table below, and absorbs your passive income. After you spend the requisite amount of time and money, you gain the new proficiency.\n \n**Intelligence – Duration**\n 0 or less – 50 days\n +1 – 45 days\n +2 – 40 days\n +3 – 35 days\n +4 – 30 days\n +5 – 25 days\n \n**Eureka Moments.** Every day you spend training, you can roll a d20. On a 20, you have a eureka moment, and your learning advances 10 days."
 			},
 		};
 
