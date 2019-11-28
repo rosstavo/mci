@@ -73,13 +73,13 @@ bot.on('message', message => {
 		return message.channel.send(reply);
 	}
 
-    console.log( command );
-
     var embed = new RichEmbed();
 
     embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
         .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
         .setColor(0xf2edd8);
+
+    console.log( command );
 
     // Try performing the command
     try {
@@ -88,4 +88,36 @@ bot.on('message', message => {
         console.error(error);
         message.reply('There was an error trying to execute that command!');
     }
+});
+
+/**
+ * Log in the console when the bot is online
+ */
+bot.on('messageReactionAdd', ( messageReaction, user ) => {
+
+    var guildChannel = messageReaction.message.guild.channels.findKey(channel => channel.name === messageReaction.message.channel.name).toString();
+
+    if ( messageReaction.emoji.name === '❗' ) {
+
+        var embed = new RichEmbed();
+
+        embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
+            .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
+            .setColor(0xf2edd8);
+
+
+        embed.setTitle( `Request` )
+            .setDescription( messageReaction.message.content )
+            .addField( 'User', `<@${messageReaction.message.author.id}>`, true )
+            .addField( 'Channel', messageReaction.message.guild.channels.get(guildChannel).toString(), true );
+
+        bot.channels.get( process.env.SUPPORT ).send( embed );
+    }
+
+    if ( messageReaction.emoji.name === '✅' && guildChannel === process.env.SUPPORT ) {
+
+        messageReaction.message.delete();
+
+    }
+
 });
