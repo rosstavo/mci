@@ -119,12 +119,16 @@ bot.on('messageReactionAdd', ( messageReaction, user ) => {
             .setColor(0xf2edd8);
 
 
-        embed.setTitle( `Request` )
+        embed.setTitle( `Request by ${messageReaction.message.author.username}` )
             .setDescription( messageReaction.message.content )
             .addField( 'User', `<@${messageReaction.message.author.id}>`, true )
             .addField( 'Channel', messageReaction.message.guild.channels.get(guildChannel).toString(), true );
 
         bot.channels.get( process.env.SUPPORT ).send( embed );
+
+        embed.setTitle( 'Your request has been received. Here is a copy:' );
+
+        user.send( embed );
     }
 
     if ( messageReaction.emoji.name === '✅' && guildChannel === process.env.SUPPORT ) {
