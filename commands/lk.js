@@ -34,6 +34,8 @@ module.exports = {
 
 			if ( results.length ) {
 
+				results = results.slice(0,3);
+
 				results.forEach( function( row, index ) {
 
 					var score = Math.floor((1 - row.score)*100);

@@ -50,6 +50,10 @@ bot.on('ready', () => {
     embed.setTitle( 'Kzzzzt. Helper has rebooted.' )
         .setImage( 'https://media.giphy.com/media/NHIecaiSc7YjK/giphy.gif' );
 
+    // require('child_process').exec('ls -lct index.js', function(err, stdout) {
+    //     console.log('Last commit hash on this branch is:', stdout);
+    // });
+
     bot.channels.get( process.env.GENERAL ).send( embed );
 });
 
