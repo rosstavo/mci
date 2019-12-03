@@ -9,4 +9,5 @@ module.exports = {
     Downtime: require('./downtime'),
     Helper: require('./status'),
     SessionData: require('./sessionData'),
+    LegendKeeper: require('./lk'),
 };
