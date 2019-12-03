@@ -66,6 +66,10 @@ bot.on('message', message => {
         return;
     }
 
+    if ( message.mentions.roles.find( val => val.name === 'dm' ) && process.env.IDLE ) {
+        return message.reply('The DMs are on a break right now. If you need to make a check, please consult this table:\n\n**Task – DC**\nVery Easy – 5\nEasy – 10\nModerate – 15\nHard – 20\nVery Hard – 25\nNearly Impossible – 30');
+    }
+
 	const args = message.content.split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
