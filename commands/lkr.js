@@ -20,7 +20,69 @@ module.exports = {
 		if ( query === '' ) {
 			embed.setTitle( 'Please specify a search query.' );
 
+			msg.channel.send(embed);
+
 			return;
+		}
+
+		// Raw data from LegendKeeper crawl
+		var rawLegendKeeperData = fs.readFileSync('lk.json');
+		var legendKeeperList = JSON.parse(rawLegendKeeperData);
+
+		if ( query === 'index' ) {
+
+			var list = [];
+
+			legendKeeperList.forEach( function( row ) {
+				var char = row.val.substring(0,1);
+
+				if ( ! char.match(/[a-z]/i) ) {
+					char = 'Other';
+				}
+
+				var charArray = [];
+
+				if ( list[char] ) {
+					charArray = list[char];
+				}
+
+				charArray.push(row.val);
+
+				list[char] = charArray;
+			} );
+
+			const alphabetSorting = [
+				[ 'A', 'B', 'C', 'D', 'E' ],
+				[ 'F', 'G', 'H', 'I', 'J' ],
+				[ 'K', 'L', 'M', 'N', 'O' ],
+				[ 'P', 'Q', 'R', 'S' ],
+				[ 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ],
+				[ 'Other' ]
+			];
+
+			alphabetSorting.forEach( function( section ) {
+
+				var fields = [];
+
+				section.forEach( function( letter ) {
+					fields = fields.concat( list[letter] );
+				} );
+
+				var title = section[0] + '—' + section[section.length - 1];
+
+				console.log( fields );
+
+				embed.addField( title, fields.join( "\n" ), true );
+
+			} );
+
+
+			embed.setTitle( 'Showing all pages:' );
+
+			msg.channel.send(embed);
+
+			return;
+
 		}
 
 		// Options for Fuse
@@ -36,10 +98,6 @@ module.exports = {
 				'val'
 			]
 		};
-
-		// Raw data from LegendKeeper crawl
-		var rawLegendKeeperData = fs.readFileSync('lk.json');
-		var legendKeeperList = JSON.parse(rawLegendKeeperData);
 
 		// Instantiate Fuse, do the search
 		var fuse = new Fuse( legendKeeperList, fuseOptions );
