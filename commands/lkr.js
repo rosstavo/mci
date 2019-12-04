@@ -118,7 +118,7 @@ module.exports = {
 
 		// Generate message to notify user we're grabbing the result
 		embed.setTitle( `Showing content for "${result.item.val}"` )
-			.setDescription( 'Fetching info… this may take a few moments.' )
+			.setDescription( 'Fetching info from LegendKeeper… this may take a few moments.' )
 			.setURL( url );
 
 		// Add top 3 search results to message
@@ -160,26 +160,52 @@ module.exports = {
 
 			// Grab the content
 			try {
+
 				let content = await page.evaluate(() => {
 					return document.querySelector('.ProseMirror-lk > .ProseMirror').innerHTML;
 				});
 
 				// Convert content to Markdown
 				var turndownService = new TurndownService();
-				var markdown = turndownService.turndown( truncate( content, 1024, {
-					ellipsis: '... [Content clipped]'
-				} ) );
+				var markdown = turndownService.turndown(
+					truncate(
+						content,
+						1024,
+						{ ellipsis: '... [Content clipped]' }
+					)
+				);
 
 				// Overwrite the Embed
 				embed.setDescription( markdown );
-				message.edit( embed );
 
 			} catch (error) {
 
 				embed.setDescription( 'Sorry, there was an error retrieving the article.' );
+
 				message.edit( embed );
 
+				await browser.close();
+
+				return;
+
 			}
+
+			// Grab the thumbnail
+			try {
+
+				await page.click('.info-panel-image > canvas');
+
+				let image = await page.evaluate(() => {
+					return document.querySelector('.image-lightbox > img').src;
+				});
+
+				embed.setThumbnail( image );
+
+			} catch (error) {
+				embed.setThumbnail( 'https://liturgistsrpg.com/imgs/helper.png' );
+			}
+
+			message.edit( embed );
 
 			// Close the browser
 			await browser.close();
