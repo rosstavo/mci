@@ -13,6 +13,9 @@
     "dotenv": "^8.1.0",
     "fuse.js": "^3.4.6",
     "papaparse": "^5.1.0",
+    "puppeteer": "^2.0.0",
+    "truncate-html": "^1.0.3",
+    "turndown": "^5.0.3",
     "ws": "^7.2.0",
     "xmlhttprequest": "^1.8.0"
   }

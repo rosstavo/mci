@@ -10,4 +10,5 @@ module.exports = {
     Helper: require('./status'),
     SessionData: require('./sessionData'),
     LegendKeeper: require('./lk'),
+    LegendKeeperReturn: require('./lkr'),
 };
