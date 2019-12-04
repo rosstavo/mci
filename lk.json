@@ -1,21 +1,9 @@
 [{
-    "key": "ck2p4pq8a6pu70796sg1aq7cg",
-    "val": "(11,12) Mountains"
-}, {
-    "key": "ck2p4tgcn6qdz0796eweaav0q",
-    "val": "(11,18) Hills"
-}, {
     "key": "ck2ozna7m691q07969x645n2a",
     "val": "(15,18) Fungi"
 }, {
     "key": "ck2ozwd37atdi0815emfed03k",
     "val": "(16,17) Grasslands"
-}, {
-    "key": "ck2ozfmj6asfe0815yw4pwiyt",
-    "val": "(17,17) Hills"
-}, {
-    "key": "ck2p4w08rbasx08150si6pvj4",
-    "val": "(7,16) Cliffs"
 }, {
     "key": "ck11vbhyla7k90815oc2fw5jv",
     "val": "15,18"
@@ -50,9 +38,6 @@
     "key": "ck351essoicy10796881r34nj",
     "val": "Arkiv Tower"
 }, {
-    "key": "ck3h4p0v3hnmm0815ai8lbpnz",
-    "val": "Ascension of the Gods"
-}, {
     "key": "ck3fs3fotemsm0815oxmae27t",
     "val": "Asna"
 }, {
@@ -64,9 +49,6 @@
 }, {
     "key": "ck0w76taqy30s0796qb3q4gcz",
     "val": "Bardia"
-}, {
-    "key": "ck1s95yv9pq1s0796vwkn8dqm",
-    "val": "BB"
 }, {
     "key": "ck3pfk4prfzee08153envp4uf",
     "val": "Beings"
@@ -128,9 +110,6 @@
     "key": "ck0w77wbjzqcc0815yn5cal4p",
     "val": "Crag Gallows"
 }, {
-    "key": "ck3h4nqsgceeo0796lo92zb68",
-    "val": "Creation of the Universe"
-}, {
     "key": "ck0w5jd8cy0z10796h3xxnzlf",
     "val": "Creatures"
 }, {
@@ -154,21 +133,6 @@
 }, {
     "key": "ck3fs10759fzg0796m2irix8p",
     "val": "Dvarg"
-}, {
-    "key": "ck0u9c9juvo0d0815aic0qe8r",
-    "val": "Elemental Temple of Air"
-}, {
-    "key": "ck0u9bp5gvny50815ihkfccn7",
-    "val": "Elemental Temple of Earth"
-}, {
-    "key": "ck0u9d4qru3qs0796yn77q1db",
-    "val": "Elemental Temple of Fire"
-}, {
-    "key": "ck0u9dl72vo4r0815mobni4ni",
-    "val": "Elemental Temple of Flesh"
-}, {
-    "key": "ck0u9cxfvvo1t0815xcxlc958",
-    "val": "Elemental Temple of Water"
 }, {
     "key": "ck3h6fdk6houh08154mjxi522",
     "val": "Elgar"
@@ -359,9 +323,6 @@
     "key": "ck0xss0tt0z600796qufglk75",
     "val": "Kilian Tus"
 }, {
-    "key": "ck1s71bhlslg20815juvmcuol",
-    "val": "Kobold Village"
-}, {
     "key": "ck3fs1pizemji0815ulc4rj7k",
     "val": "Kraka"
 }, {
@@ -394,9 +355,6 @@
 }, {
     "key": "ck2bubl332x470796gne9lexb",
     "val": "Leudast Chubb-Boggins"
-}, {
-    "key": "ck1h3lopr0c2507962jnrpgok",
-    "val": "Leyline Temples"
 }, {
     "key": "ck3pxz6tnspdl07961msl5h2s",
     "val": "Loxodon Religion"
@@ -449,9 +407,6 @@
     "key": "ck2bpo8552oti0796emjza6fy",
     "val": "Nautiloid"
 }, {
-    "key": "ck1co72qdrsmn0796uzpv5lt9",
-    "val": "New Kalapa (Rolandia)"
-}, {
     "key": "ck0w7bdugy3950796ccs3gm8h",
     "val": "Noin"
 }, {
@@ -491,9 +446,6 @@
     "key": "ck17kjhw2kizt081569xp1tzh",
     "val": "Pitsbane"
 }, {
-    "key": "ck2j0be0gsvhz081535o22709",
-    "val": "Place of Power"
-}, {
     "key": "ck3pn5794lu1f0815op2hz5qx",
     "val": "Places"
 }, {
@@ -529,9 +481,6 @@
 }, {
     "key": "ck0w7c4kpzqhs0815cx2fhcus",
     "val": "Rimi"
-}, {
-    "key": "ck1s706rypk740796fnq34v0f",
-    "val": "River"
 }, {
     "key": "ck3foxwfo9bwq07965202m3ny",
     "val": "River"
@@ -620,21 +569,6 @@
     "key": "ck2efg09has2l07964c3vrepp",
     "val": "Templates"
 }, {
-    "key": "ck0u99fe5u3il0796pfr2br58",
-    "val": "Temple of the Black Dragon"
-}, {
-    "key": "ck0u99qlxu3j40796ff6x2m70",
-    "val": "Temple of the Blue Dragon"
-}, {
-    "key": "ck0u98teivns008151khdmslk",
-    "val": "Temple of the Green Dragon"
-}, {
-    "key": "ck0u9a4slu3jz0796yh31y759",
-    "val": "Temple of the Red Dragon"
-}, {
-    "key": "ck0u9awuau3km0796ejs7t336",
-    "val": "Temple of the White Dragon"
-}, {
     "key": "ck0w7da70y3cm07963l06q0gl",
     "val": "Teya'fel"
 }, {
@@ -644,26 +578,14 @@
     "key": "ck0a4wp5xr79e0815mu10o4ih",
     "val": "The Continent"
 }, {
-    "key": "ck3h4skbqcej20796tvqinriw",
-    "val": "The Creation of the Metallic Dragons"
-}, {
     "key": "ck0w60chzy1jy0796ssok1u8g",
     "val": "The Divine Legion"
-}, {
-    "key": "ck3h4vp9qhntu0815djj57p41",
-    "val": "The Enslavement of the World"
-}, {
-    "key": "ck2hr0jcrojs2081506k2mb4h",
-    "val": "The Eternal Tomb of The End"
 }, {
     "key": "ck0w60ifuy1kc07965665ojh2",
     "val": "The Etheric Council"
 }, {
     "key": "ck0l4shsccvvq079623jog68q",
     "val": "The Etheric Council Academy"
-}, {
-    "key": "ck3h4wui7hnvf0815ov34y7gx",
-    "val": "The First Age of Mortals"
 }, {
     "key": "ck0w60ma1y1kr07960sai2hh3",
     "val": "The Green Hand"
@@ -674,23 +596,11 @@
     "key": "ck0w60u6by1l50796zz0nncs0",
     "val": "The Mineral Creek Initiative"
 }, {
-    "key": "ck3h4tonhceld0796sm39nful",
-    "val": "The Rise of the Chromatics"
-}, {
-    "key": "ck3h4uxfzhnsn0815us7wg367",
-    "val": "The Schism"
-}, {
-    "key": "ck12o3oksbgf50815o91ve4qi",
-    "val": "The Sparkle Caves"
-}, {
     "key": "ck3kur4saja7x0796ctubbr0z",
     "val": "The Underdark"
 }, {
     "key": "ck0l4szo6cvwr0796t66qkxl6",
     "val": "The World's Edge Tavern"
-}, {
-    "key": "ck0w6k48szpjp0815l6sf6l6c",
-    "val": "Thieves Guild"
 }, {
     "key": "ck3foxdz89bui0796xzu6x0pg",
     "val": "Thom"

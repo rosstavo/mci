@@ -1,7 +1,7 @@
 module.exports = {
 	name: '!lk',
 	aliases: ['!legendkeeper','!lookup','!find'],
-	description: 'This command shows downtime activities.',
+	description: 'Simple LegendKeeper integration.',
 	execute(msg, args, embed) {
 
 		var query = args.join(' ');
