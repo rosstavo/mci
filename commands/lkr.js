@@ -205,6 +205,7 @@ module.exports = {
 				embed.setThumbnail( 'https://liturgistsrpg.com/imgs/helper.png' );
 			}
 
+
 			message.edit( embed );
 
 			// Close the browser
