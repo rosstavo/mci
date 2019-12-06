@@ -7,11 +7,11 @@ module.exports = {
 		/**
 		 * Grab our methods
 		 */
-		const puppeteer = require('puppeteer');
-		const Fuse = require('fuse.js');
-		const fs = require('fs');
+		const puppeteer       = require('puppeteer');
+		const Fuse            = require('fuse.js');
+		const fs              = require('fs');
 		const TurndownService = require('turndown');
-		const truncate = require('truncate-html');
+		const truncate        = require('truncate-html');
 
 		// Get our query as a string
 		var query = args.join(' ');
@@ -167,6 +167,7 @@ module.exports = {
 
 				// Convert content to Markdown
 				var turndownService = new TurndownService();
+
 				var markdown = turndownService.turndown(
 					truncate(
 						content,

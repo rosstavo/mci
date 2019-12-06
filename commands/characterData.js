@@ -10,6 +10,7 @@ module.exports = {
 		}
 
 		const Papa = require( 'papaparse' );
+		const Fuse = require( 'fuse.js' );
 
 		const getScript = (url) => {
 		    return new Promise((resolve, reject) => {
@@ -49,79 +50,82 @@ module.exports = {
 				"header": true
 			} );
 
-			var found = data.data.find( function(el) {
+			var query = args.join(' ');
 
-				if ( msg.mentions.users.firstKey() ) {
-					return el['Discord'] === msg.mentions.users.firstKey();
-				}
+			// Options for Fuse
+			var fuseOptions = {
+				shouldSort: true,
+				includeScore: true,
+				threshold: 0.3,
+				location: 0,
+				distance: 100,
+				maxPatternLength: 32,
+				minMatchCharLength: 1,
+				keys: [
+					'Player'
+				]
+			};
 
-				return el['Player'].toLowerCase().replace(/ /g,'') === args.join('').toLowerCase();
+			// Instantiate Fuse, do the search
+			var fuse = new Fuse( data.data, fuseOptions );
+			var results = fuse.search(query);
 
-			} );
+			console.log( results );
 
-			if ( ! found ) {
 
-				found = data.data.find( function(el) {
+			// If nothing found, quit out
+			if ( ! results.length ) {
+			   embed.setDescription( 'No results found.' );
 
-					if ( el['Names'] == '' ) {
-						return false;
-					}
+			   msg.channel.send( embed );
 
-					return JSON.parse( el['Names'] ).find( function(el) {
-						return el.toLowerCase().replace(/ /g,'') === args.join('').toLowerCase();
-					} );
-
-				} );
-
+			   return;
 			}
 
-			if ( found && found['Player'] !== '' ) {
 
-				embed.setTitle( `Character Info: ${found['Player']}` );
+			// Take our first result and generate the LK URL
+			var result = results[0].item;
 
-				if ( found['Names'] !== '' ) {
-					embed.addField( 'Also known as', JSON.parse( found['Names'] ).filter( function(el) {
-						return el !== found['Player'];
-					} ).join(', '), true );
-				}
+			embed.setTitle( `Character Info: ${result['Player']}` );
 
-				if ( found['Summary'] !== '' ) {
-					embed.setDescription( found['Summary'] );
-				}
+			if ( result['Names'] !== '' ) {
+				embed.addField( 'Also known as', JSON.parse( result['Names'] ).filter( function(el) {
+					return el !== result['Player'];
+				} ).join(', '), true );
+			}
 
-				if ( found['Character pronouns'] !== '' ) {
-					embed.addField( 'Character pronouns', found['Character pronouns'], true );
-				}
+			if ( result['Summary'] !== '' ) {
+				embed.setDescription( result['Summary'] );
+			}
 
-				if ( found['Discord'] !== '' && found['Player pronouns'] !== '' ) {
-					embed.addField( 'Player', `<@${found['Discord']}> (${found['Player pronouns']})`, false );
-				}
+			if ( result['Character pronouns'] !== '' ) {
+				embed.addField( 'Character pronouns', result['Character pronouns'], true );
+			}
 
-				embed.addField( 'Stats', `${ found['Player'] } is currently level ${ found['Level'] } with ${ found['Remaining'] } XP remaining until levelling up. For more details, click the character name above.`, false );
+			if ( result['Discord'] !== '' && result['Player pronouns'] !== '' ) {
+				embed.addField( 'Player', `<@${result['Discord']}> (${result['Player pronouns']})`, false );
+			}
 
-				if ( found['Sessions'] !== '' ) {
-					embed.addField( 'Sessions played in total', found['Sessions'], true );
-				}
+			embed.addField( 'Stats', `${ result['Player'] } is currently level ${ result['Level'] } with ${ result['Remaining'] } XP remaining until levelling up. For more details, click the character name above.`, false );
 
-				if ( found['Days since first session'] !== '' ) {
-					embed.addField( 'Days since first session', found['Days since first session'], true );
-				}
+			if ( result['Sessions'] !== '' ) {
+				embed.addField( 'Sessions played in total', result['Sessions'], true );
+			}
 
-				if ( found['Days since last session'] !== '' ) {
-					embed.addField( 'Days since last session', found['Days since last session'], true );
-				}
+			if ( result['Days since first session'] !== '' ) {
+				embed.addField( 'Days since first session', result['Days since first session'], true );
+			}
 
-				if ( found['Portrait'] !== '' ) {
-					embed.setThumbnail( found['Portrait'] );
-				}
+			if ( result['Days since last session'] !== '' ) {
+				embed.addField( 'Days since last session', result['Days since last session'], true );
+			}
 
-				if ( found['dndbeyond'] !== '' ) {
-					embed.setURL( found['dndbeyond'] );
-				}
+			if ( result['Portrait'] !== '' ) {
+				embed.setThumbnail( result['Portrait'] );
+			}
 
-			} else {
-				embed.setTitle( 'No character found.' )
-					.setDescription( 'Sorry, I could not find a character by that name.' );
+			if ( result['dndbeyond'] !== '' ) {
+				embed.setURL( result['dndbeyond'] );
 			}
 
 			msg.channel.send( embed );
