@@ -88,12 +88,6 @@ module.exports = {
 
 			embed.setTitle( `Character Info: ${result['Player']}` );
 
-			if ( result['Names'] !== '' ) {
-				embed.addField( 'Also known as', JSON.parse( result['Names'] ).filter( function(el) {
-					return el !== result['Player'];
-				} ).join(', '), true );
-			}
-
 			if ( result['Summary'] !== '' ) {
 				embed.setDescription( result['Summary'] );
 			}
