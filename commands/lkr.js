@@ -12,6 +12,7 @@ module.exports = {
 		const fs              = require('fs');
 		const TurndownService = require('turndown');
 		const truncate        = require('truncate-html');
+		const functions	      = require('../functions.js');
 
 		// Get our query as a string
 		var query = args.join(' ');
@@ -165,19 +166,11 @@ module.exports = {
 					return document.querySelector('.ProseMirror-lk > .ProseMirror').innerHTML;
 				});
 
-				// Convert content to Markdown
-				var turndownService = new TurndownService();
-
-				var markdown = turndownService.turndown(
-					truncate(
-						content,
-						1024,
-						{ ellipsis: '... [Content clipped]' }
-					)
-				);
 
 				// Overwrite the Embed
-				embed.setDescription( markdown );
+				// embed.setDescription( markdown );
+
+				embed = functions.discordFormatEmbed( content, embed );
 
 			} catch (error) {
 

@@ -4,35 +4,7 @@ module.exports = {
 	description: 'This command displays Helper’s current status.',
 	execute(msg, args, embed) {
 
-		const getScript = (url) => {
-			return new Promise((resolve, reject) => {
-				const http      = require('http'),
-					  https     = require('https');
-
-				let client = http;
-
-				if (url.toString().indexOf("https") === 0) {
-					client = https;
-				}
-
-				client.get(url, (resp) => {
-					let data = '';
-
-					// A chunk of data has been recieved.
-					resp.on('data', (chunk) => {
-						data += chunk;
-					});
-
-					// The whole response has been received. Print out the result.
-					resp.on('end', () => {
-						resolve(data);
-					});
-
-				}).on("error", (err) => {
-					reject(err);
-				});
-			});
-		};
+		const functions = require('../functions.js');
 
 		// Giphy API defaults
 		const giphy = {
@@ -58,7 +30,7 @@ module.exports = {
 
 		(async (url) => {
 
-			var gifs = await getScript(url);
+			var gifs = await functions.getScript(url);
 
 			var gifsData = JSON.parse(gifs).data;
 

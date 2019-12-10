@@ -4,55 +4,13 @@ module.exports = {
 	description: 'This command displays information about the previous session.',
 	execute(msg, args, embed) {
 
-		const Papa = require( 'papaparse' );
+		const Papa      = require( 'papaparse' );
+		const functions = require( '../functions.js' );
 
-		var groupBy = (list, keyGetter) => {
-			const map = new Map();
-			list.forEach((item) => {
-				const key = keyGetter(item);
-				const collection = map.get(key);
-				if (!collection) {
-					map.set(key, [item]);
-				} else {
-					collection.push(item);
-				}
-			});
-			return map;
-		}
-
-		const getScript = (url) => {
-		    return new Promise((resolve, reject) => {
-		        const http      = require('http'),
-		              https     = require('https');
-
-		        let client = http;
-
-		        if (url.toString().indexOf("https") === 0) {
-		            client = https;
-		        }
-
-		        client.get(url, (resp) => {
-		            let data = '';
-
-		            // A chunk of data has been recieved.
-		            resp.on('data', (chunk) => {
-		                data += chunk;
-		            });
-
-		            // The whole response has been received. Print out the result.
-		            resp.on('end', () => {
-		                resolve(data);
-		            });
-
-		        }).on("error", (err) => {
-		            reject(err);
-		        });
-		    });
-		};
 
 		(async (url) => {
 
-			var csv = await getScript(url);
+			var csv = await functions.getScript(url);
 
 			var data = Papa.parse( csv, {
 				"header": true
@@ -104,7 +62,7 @@ module.exports = {
 				embed.setTitle('XP Totals')
 					.setDescription( `As of session #${sessions.length}:`);
 
-				const grouped = groupBy( data.data, row => row['Level'] );
+				const grouped = functions.groupBy( data.data, row => row['Level'] );
 
 				for (const [level, rows] of grouped) {
 
