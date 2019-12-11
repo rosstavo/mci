@@ -54,7 +54,8 @@ bot.on('ready', () => {
     //     console.log('Last commit hash on this branch is:', stdout);
     // });
 
-    bot.channels.get( process.env.GENERAL ).send( embed );
+    // bot.channels.get( process.env.GENERAL ).send( embed );
+
 });
 
 /**
