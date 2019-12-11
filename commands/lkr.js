@@ -23,7 +23,7 @@ module.exports = {
 
 		// Quit if no query
 		if ( query === '' ) {
-			
+
 			var list = [];
 
 			legendKeeperList.forEach( function( row ) {
@@ -162,7 +162,7 @@ module.exports = {
 
 			} catch (error) {
 
-				embed.setDescription( 'Sorry, there was an error retrieving the article.' );
+				embed.setDescription( 'It looks like this article has no content. Maybe you\'d like to contribute some!' );
 
 				message.edit( embed );
 
