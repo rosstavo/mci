@@ -17,21 +17,13 @@ module.exports = {
 		// Get our query as a string
 		var query = args.join(' ');
 
-		// Quit if no query
-		if ( query === '' ) {
-			embed.setTitle( 'Please specify a search query.' );
-
-			msg.channel.send(embed);
-
-			return;
-		}
-
 		// Raw data from LegendKeeper crawl
 		var rawLegendKeeperData = fs.readFileSync('lk.json');
 		var legendKeeperList = JSON.parse(rawLegendKeeperData);
 
-		if ( query === 'index' ) {
-
+		// Quit if no query
+		if ( query === '' ) {
+			
 			var list = [];
 
 			legendKeeperList.forEach( function( row ) {
@@ -71,10 +63,7 @@ module.exports = {
 
 				var title = section[0] + '—' + section[section.length - 1];
 
-				console.log( fields );
-
 				embed.addField( title, fields.join( "\n" ), true );
-
 			} );
 
 
@@ -83,7 +72,6 @@ module.exports = {
 			msg.channel.send(embed);
 
 			return;
-
 		}
 
 		// Options for Fuse
