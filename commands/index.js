@@ -12,4 +12,5 @@ module.exports = {
     SessionData   : require('./sessionData'),
     LegendKeeper  : require('./lkr'),
     Backup        : require('./backup'),
+    CheckIn       : require('./checkin'),
 };
