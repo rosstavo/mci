@@ -3,6 +3,8 @@ module.exports = {
 	description: 'This command returns how foggy it is.',
 	execute(msg, args, embed) {
 
+		const functions = require('../functions.js');
+
 		var weather = [
 			'The weather in the Loamy Cape today is foggy.',
 			'The weather in the Loamy Cape today is very foggy.',
@@ -18,10 +20,27 @@ module.exports = {
 
 		var today = weather[Math.floor(Math.random()*weather.length)];
 
+
+
+
 		embed.setTitle('What\'s the weather like today?')
 			.setDescription( today );
 
-		msg.channel.send( embed );
+		msg.channel.send( embed ).then( message => ( async () => {
+
+			var data = await functions.getScript( `http://api.openweathermap.org/data/2.5/weather?lat=38.167795&lon=-122.331556&appid=${process.env.OPENWEATHER}`);
+
+			var parsedData = JSON.parse(data);
+
+			var fahrenheit = Math.round( ( parsedData.main.temp * 9 ) / 5 - 459.67 );
+
+			var celsius = Math.round( parsedData.main.temp - 273.15 );
+
+			embed.addField( 'Temperature', `It's ${fahrenheit}°F / ${celsius}°C outside.` );
+
+			message.edit(embed);
+
+		} )( ) );
 
 	},
 };
