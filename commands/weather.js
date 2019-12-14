@@ -20,9 +20,6 @@ module.exports = {
 
 		var today = weather[Math.floor(Math.random()*weather.length)];
 
-
-
-
 		embed.setTitle('What\'s the weather like today?')
 			.setDescription( today );
 
@@ -32,9 +29,11 @@ module.exports = {
 
 			var parsedData = JSON.parse(data);
 
-			var fahrenheit = Math.round( ( parsedData.main.temp * 9 ) / 5 - 459.67 );
+			var avg = ( parsedData.main.temp_min + parsedData.main.temp_max ) / 2;
 
-			var celsius = Math.round( parsedData.main.temp - 273.15 );
+			var fahrenheit = Math.round( ( avg * 9 ) / 5 - 459.67 );
+
+			var celsius = Math.round( avg - 273.15 );
 
 			embed.addField( 'Temperature', `It's ${fahrenheit}°F / ${celsius}°C outside.` );
 
