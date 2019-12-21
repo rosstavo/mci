@@ -5,14 +5,14 @@ module.exports = {
 	description: 'This command displays character information.',
 	execute(msg, args, embed) {
 
-		if ( ! args[0] ) {
-			return;
-		}
-
 		const Fuse      = require('fuse.js');
 		const functions = require('../functions.js');
 
 		var prices = require('../prices.json');
+
+		if ( ! args[0] ) {
+			return;
+		}
 
 		var names = Object.keys(prices);
 		var values = Object.values(prices);
