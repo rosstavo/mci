@@ -13,4 +13,5 @@ module.exports = {
     LegendKeeper  : require('./lkr'),
     Backup        : require('./backup'),
     CheckIn       : require('./checkin'),
+    Prices        : require('./prices'),
 };
