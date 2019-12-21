@@ -2,6 +2,8 @@
  * Get the environment config
  */
 require('dotenv').config();
+const functions = require('./functions.js');
+const fs        = require('fs');
 
 /**
  * Set up the client
@@ -38,14 +40,17 @@ bot.login(TOKEN);
  * Log in the console when the bot is online
  */
 bot.on('ready', () => {
+
     console.info(`Logged in as ${bot.user.tag}!`);
-    bot.user.setPresence({ game: { name: '!commands', type: "LISTENING" }});
 
-    var embed = new RichEmbed();
+    bot.user.setPresence({
+        game: {
+            name: '!commands',
+            type: "LISTENING"
+        }
+    });
 
-    embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
-        .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
-        .setColor(0xf2edd8);
+    var embed = functions.formatEmbed( new RichEmbed() );
 
     embed.setTitle( 'Kzzzzt. Helper has rebooted.' )
         .setImage( 'https://media.giphy.com/media/NHIecaiSc7YjK/giphy.gif' );
@@ -54,8 +59,7 @@ bot.on('ready', () => {
     //     console.log('Last commit hash on this branch is:', stdout);
     // });
 
-    // bot.channels.get( process.env.GENERAL ).send( embed );
-
+    bot.channels.get( process.env.GENERAL ).send( embed );
 });
 
 /**
@@ -72,7 +76,21 @@ bot.on('message', message => {
     }
 
 	const args = message.content.split(/ +/);
-	const commandName = args.shift().toLowerCase();
+
+	let commandName = args.shift().toLowerCase();
+
+    // var days = JSON.parse( fs.readFileSync('days.json') );
+    //
+    // days.find( function(item, key) {
+    //
+    //     if ( new RegExp(item.morning.join("|"), 'i').test(message.content) || new RegExp(item.evening.join("|"), 'i').test(message.content) ) {
+    //
+    //         commandName = '!day';
+    //
+    //         args[0] = key;
+    //     }
+    //
+    // } );
 
 	const command = bot.commands.get(commandName)
 		|| bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -93,11 +111,7 @@ bot.on('message', message => {
 		return message.channel.send(reply);
 	}
 
-    var embed = new RichEmbed();
-
-    embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
-        .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
-        .setColor(0xf2edd8);
+    var embed = functions.formatEmbed( new RichEmbed() );
 
     console.log( command );
 
@@ -115,18 +129,11 @@ bot.on('message', message => {
  */
 bot.on('messageReactionAdd', ( messageReaction, user ) => {
 
-    console.log( messageReaction.emoji.name );
-
     var guildChannel = messageReaction.message.guild.channels.findKey(channel => channel.name === messageReaction.message.channel.name).toString();
 
     if ( messageReaction.emoji.name === '❗' ) {
 
-        var embed = new RichEmbed();
-
-        embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
-            .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
-            .setColor(0xf2edd8);
-
+        var embed = functions.formatEmbed( new RichEmbed() );
 
         embed.setTitle( `Request by ${messageReaction.message.author.username}` )
             .setDescription( messageReaction.message.content )

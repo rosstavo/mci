@@ -55,5 +55,13 @@ module.exports = {
             }
         });
         return map;
+    },
+    formatEmbed: (embed) => {
+
+        embed.setAuthor( 'INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png' )
+            .setFooter( '[This message is encrypted and cannot be read without a cypher.]' )
+            .setColor(0xf2edd8);
+
+        return embed;
     }
 };
