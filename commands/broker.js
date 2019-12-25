@@ -59,7 +59,8 @@ module.exports = {
 				var result = results[0].item;
 
 
-				embed.setTitle( '“Hello darling, here’s what I have for sale this week…”' );
+				embed.setTitle( '“Hello darling, here’s what I have for sale this week…”' )
+					.setDescription( 'Otsuildagne’s rules of purchase:\n```1. One of each item available per customer. \n2. For item value appraisals or more specific item acquisitions, please schedule a meeting for 25 gp. \n3. Take off your shoes at the door.```' );
 
 				const seed = functions.weeksBetween( new Date(), new Date(2019, 12, 24) );
 
