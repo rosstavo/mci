@@ -14,4 +14,5 @@ module.exports = {
     Backup        : require('./backup'),
     CheckIn       : require('./checkin'),
     Prices        : require('./prices'),
+    Broker        : require('./broker'),
 };
