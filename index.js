@@ -52,8 +52,7 @@ bot.on('ready', () => {
 
     var embed = functions.formatEmbed( new RichEmbed() );
 
-    embed.setTitle( 'Kzzzzt. Helper has rebooted.' )
-        .setImage( 'https://media.giphy.com/media/NHIecaiSc7YjK/giphy.gif' );
+    embed.setTitle( 'Kzzzzt. Helper has rebooted.' );
 
     // require('child_process').exec('ls -lct index.js', function(err, stdout) {
     //     console.log('Last commit hash on this branch is:', stdout);
