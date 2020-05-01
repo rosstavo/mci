@@ -12,6 +12,7 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.1.0",
     "fuse.js": "^3.4.6",
+    "he": "^1.2.0",
     "papaparse": "^5.1.0",
     "puppeteer": "^2.0.0",
     "seedrandom": "^3.0.5",

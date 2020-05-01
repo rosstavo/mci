@@ -15,4 +15,5 @@ module.exports = {
     CheckIn       : require('./checkin'),
     Prices        : require('./prices'),
     Broker        : require('./broker'),
+    Codex         : require('./codex'),
 };
