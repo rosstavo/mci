@@ -72,12 +72,21 @@ module.exports = {
 						return;
 					}
 
+					if ( row["Type"] === 'Spell Scrolls' ) {
+						return;
+					}
+
 					embed.addField( row.item, `${row.dmpg} gp\n${row.rarity}`, true );
 				} );
 
 				embed.addField('—', '**Formulae:**');
 
 				items.slice(10,13).forEach( function(row) {
+
+					if ( row.Type === 'Spell Scrolls' ) {
+						return;
+					}
+
 					embed.addField( `Crafting Recipe: ${row.item}`, `200 gp\n${row.rarity}`, true );
 				} );
 

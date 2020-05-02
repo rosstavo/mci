@@ -68,8 +68,8 @@ module.exports = {
     },
     formatBroker: (embed) => {
 
-        embed.setAuthor('The Broker says…', 'https://liturgistsrpg.com/imgs/character/Otsuildagne.jpg')
-            .setThumbnail('https://liturgistsrpg.com/imgs/character/Otsuildagne.jpg')
+        embed.setAuthor('The Broker says…', 'https://liturgistsrpg.com/wp-content/uploads/Otsuildagne.jpg', 'https://liturgistsrpg.com/codex/the-broker/')
+            .setThumbnail('https://liturgistsrpg.com/wp-content/uploads/Otsuildagne.jpg')
             .setFooter('Thank you for visiting Otsuildagne, the Broker.')
             .setColor(0xf2edd8);
 
