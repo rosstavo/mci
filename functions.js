@@ -110,7 +110,7 @@ module.exports = {
 
         return true;
     },
-    formatDialogue: (str, words) => {
+    formatDialogue: (str, words = false) => {
         const vsprintf = require('sprintf-js').vsprintf;
 
         if ( words.length ) {
