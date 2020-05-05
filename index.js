@@ -2,8 +2,10 @@
  * Get the environment config
  */
 require('dotenv').config();
-const functions = require('./functions.js');
-const fs        = require('fs');
+const fn   = require('./functions.js');
+const Fuse = require('fuse.js');
+
+const dialogue = require('./dialogue.json');
 
 /**
  * Set up the client
@@ -45,20 +47,16 @@ bot.on('ready', () => {
 
     bot.user.setPresence({
         game: {
-            name: '!commands',
+            name: '#broker',
             type: "LISTENING"
         }
     });
 
-    var embed = functions.formatEmbed( new RichEmbed() );
+    var embed = fn.formatEmbed( new RichEmbed() );
 
-    embed.setTitle( 'Kzzzzt. Helper has rebooted.' );
+    embed.setTitle( 'The Broker is open for business.' );
 
-    // require('child_process').exec('ls -lct index.js', function(err, stdout) {
-    //     console.log('Last commit hash on this branch is:', stdout);
-    // });
-
-    bot.channels.get( process.env.LOGS ).send( embed );
+    // bot.channels.get( process.env.LOGS ).send( embed );
 });
 
 /**
@@ -66,90 +64,59 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
-    if ( message.author.id === bot.user.id ) {
+    if ( message.channel.id !== process.env.BROKER && message.channel.type !== 'text' ) {
         return;
     }
 
-    if ( message.mentions.roles.find( val => val.name === 'dm' ) && process.env.IDLE === 'true' ) {
-        return message.reply('The DMs are on a break right now. If you need to make a check, please consult this table:\n\n**Task – DC**\nVery Easy – 5\nEasy – 10\nModerate – 15\nHard – 20\nVery Hard – 25\nNearly Impossible – 30');
+    if ( ! message.isMemberMentioned( bot.user ) && message.channel.type !== 'text' ) {
+        return;
+    }
+
+    if ( message.author.id === bot.user.id ) {
+        return;
     }
 
 	const args = message.content.split(/ +/);
 
 	let commandName = args.shift().toLowerCase();
 
-    // var days = JSON.parse( fs.readFileSync('days.json') );
-    //
-    // days.find( function(item, key) {
-    //
-    //     if ( new RegExp(item.morning.join("|"), 'i').test(message.content) || new RegExp(item.evening.join("|"), 'i').test(message.content) ) {
-    //
-    //         commandName = '!day';
-    //
-    //         args[0] = key;
-    //     }
-    //
-    // } );
+	let command = bot.commands.get(commandName);
 
-	const command = bot.commands.get(commandName)
-		|| bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if ( ! command ) {
 
-	if (!command) return;
+        // Options for Fuse
+        var fuseOptions = {
+            shouldSort: true,
+            includeScore: true,
+            threshold: 0.5,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 2,
+            findAllMatches: true,
+            keys: [
+                'aliases'
+            ]
+        };
 
-	if (command.guildOnly && message.channel.type !== 'text') {
-		return message.reply('I can\'t execute that command inside DMs!');
-	}
+        // Instantiate Fuse, do the search
+        var fuse = new Fuse( Array.from( bot.commands.values() ), fuseOptions );
 
-	if (command.args && !args.length) {
-		let reply = `You didn't provide any arguments, ${message.author}!`;
+        var results = fuse.search(message.content);
 
-		if (command.usage) {
-			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-		}
+        if ( results.length ) {
+            command = bot.commands.get(results[0].item.name);
+        }
 
-		return message.channel.send(reply);
-	}
+    }
 
-    var embed = functions.formatEmbed( new RichEmbed() );
-
-    console.log( command );
+    var embed = fn.formatEmbed( new RichEmbed() );
 
     // Try performing the command
     try {
         command.execute(message, args, embed);
     } catch (error) {
         console.error(error);
-        message.reply('There was an error trying to execute that command!');
+        message.reply(fn.formatDialogue(fn.arrayRand(dialogue.error_generic)));
     }
-});
-
-/**
- * Log in the console when the bot is online
- */
-bot.on('messageReactionAdd', ( messageReaction, user ) => {
-
-    var guildChannel = messageReaction.message.guild.channels.findKey(channel => channel.name === messageReaction.message.channel.name).toString();
-
-    if ( messageReaction.emoji.name === '❗' ) {
-
-        var embed = functions.formatEmbed( new RichEmbed() );
-
-        embed.setTitle( `Request by ${messageReaction.message.author.username}` )
-            .setDescription( messageReaction.message.content )
-            .addField( 'User', `<@${messageReaction.message.author.id}>`, true )
-            .addField( 'Channel', messageReaction.message.guild.channels.get(guildChannel).toString(), true );
-
-        bot.channels.get( process.env.SUPPORT ).send( embed );
-
-        embed.setTitle( 'Your request has been received. Here is a copy:' );
-
-        user.send( embed );
-    }
-
-    if ( messageReaction.emoji.name === '✅' && guildChannel === process.env.SUPPORT ) {
-
-        messageReaction.message.delete();
-
-    }
-
 });

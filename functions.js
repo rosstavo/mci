@@ -60,17 +60,7 @@ module.exports = {
     },
     formatEmbed: (embed) => {
 
-        embed.setAuthor('INCOMING TRANSMISSION FROM INTEL. OFFICER DSGN. “HELPER”', 'https://liturgistsrpg.com/imgs/helper.png')
-            .setFooter('[This message is encrypted and cannot be read without a cypher.]')
-            .setColor(0xf2edd8);
-
-        return embed;
-    },
-    formatBroker: (embed) => {
-
-        embed.setAuthor('The Broker says…', 'https://liturgistsrpg.com/wp-content/uploads/Otsuildagne.jpg', 'https://liturgistsrpg.com/codex/the-broker/')
-            .setThumbnail('https://liturgistsrpg.com/wp-content/uploads/Otsuildagne.jpg')
-            .setFooter('Thank you for visiting Otsuildagne, the Broker.')
+        embed.setFooter('No refunds.')
             .setColor(0xf2edd8);
 
         return embed;
@@ -102,8 +92,11 @@ module.exports = {
         var x = Math.sin(seed++) * 10000;
         return x - Math.floor(x);
     },
+    arrayRand: ( arr ) => {
+        return arr[Math.floor(Math.random() * arr.length)];
+    },
     canBuy: (level, rarity) => {
-        if ( rarity === 'Legendary' && level < 17 ) {
+        if ( rarity === 'Legendary' ) {
             return false;
         }
 
@@ -111,10 +104,19 @@ module.exports = {
             return false;
         }
 
-        if ( rarity === 'Rare' && level < 5 ) {
+        if ( rarity === 'Rare' && level < 8 ) {
             return false;
         }
 
         return true;
+    },
+    formatDialogue: (str, words) => {
+        const vsprintf = require('sprintf-js').vsprintf;
+
+        if ( words.length ) {
+            str = vsprintf( str, words );
+        }
+
+        return `**“${str}”**`;
     }
 };

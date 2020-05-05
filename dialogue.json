@@ -1,0 +1,27 @@
+{
+    "error_generic": [
+        "Sorry dear, I’m not sure what you’re asking.",
+        "Sorry darling, you’ll have to speak up, I’m wearing a towel.",
+        "Sorry my love, but you don’t seem to be making much sense.",
+        "Sorry precious, but please can you try again in Common?"
+    ],
+    "error_item_not_found": [
+        "Try `appraise` followed by the name of your item. Either that or I haven’t come across one of those before, which is highly unlikely."
+    ],
+    "error_player_not_found": [
+        "Sorry I don’t know who you are. Please could you contact a DM?"
+    ],
+    "evaluation": [
+        "My offer for your %s is %s gold pieces.",
+        "Oh, I’d say your %s is worth %s gold pieces.",
+        "Hmm… but rusty isn’t it? But it is quite a quaint %s… %s gold pieces."
+    ],
+    "items_in_stock": [
+        "Hello darling, here’s what I have for sale this week…"
+    ],
+    "loading": [
+        "One moment please…",
+        "Bear with me one moment…",
+        "Let me just see…"
+    ]
+}
