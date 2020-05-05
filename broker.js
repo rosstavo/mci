@@ -80,6 +80,10 @@ bot.on('message', message => {
         return;
     }
 
+    if ( message.content.replace(/ *\[[^\]]*]/g, "") === '' ) {
+        return;
+    }
+
 	let commandName = args.shift().toLowerCase();
 
 	let command = bot.commands.get(commandName);
