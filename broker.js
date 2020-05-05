@@ -64,6 +64,8 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
+    const args = message.content.split(/ +/);
+
     if ( message.channel.id !== process.env.BROKER && message.channel.type === 'text' ) {
 
         if ( ! message.isMemberMentioned( bot.user ) ) {
@@ -77,8 +79,6 @@ bot.on('message', message => {
     if ( message.author.id === bot.user.id ) {
         return;
     }
-
-	const args = message.content.split(/ +/);
 
 	let commandName = args.shift().toLowerCase();
 
