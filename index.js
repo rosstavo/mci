@@ -78,8 +78,6 @@ bot.on('message', message => {
 
 	const args = message.content.split(/ +/);
 
-    console.log( args );
-
 	let commandName = args.shift().toLowerCase();
 
 	let command = bot.commands.get(commandName);
