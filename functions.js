@@ -96,19 +96,20 @@ module.exports = {
         return arr[Math.floor(Math.random() * arr.length)];
     },
     canBuy: (level, rarity) => {
-        if ( rarity === 'Legendary' ) {
-            return false;
-        }
 
         if ( rarity === 'Very Rare' && level < 11 ) {
-            return false;
+            return ':lock: Level 12';
         }
 
         if ( rarity === 'Rare' && level < 8 ) {
-            return false;
+            return ':lock: Level 9';
         }
 
-        return true;
+        if ( rarity === 'Uncommon' && level < 4 ) {
+            return ':lock: Level 5';
+        }
+
+        return 'Available!';
     },
     formatDialogue: (str, words = false) => {
         const vsprintf = require('sprintf-js').vsprintf;

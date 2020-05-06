@@ -17,24 +17,37 @@ module.exports = {
 		const shuffleSeed = require('shuffle-seed');
 		const Papa        = require('papaparse');
 
-		var dialogue = require('../dialogue.json');
+		let dialogue = require('../dialogue.json');
 
-		var magic = require('../magic.json');
+		let magic = require('../magic.json');
+
+		magic = magic.filter( item => {
+
+			if ( item['rarity'] === 'Legendary' ) {
+				return false;
+			}
+
+			if ( item['Type'] === 'Spell Scrolls' ) {
+				return false;
+			}
+
+			return true;
+		} );
 
 		embed = fn.formatEmbed(embed);
 
 		msg.reply( fn.formatDialogue( fn.arrayRand(dialogue.loading) ) ).then( message => ( async (url) => {
 
-			var csv = await fn.getScript(url);
+			let csv = await fn.getScript(url);
 
-			var data = Papa.parse( csv, {
+			let data = Papa.parse( csv, {
 				"header": true
 			} );
 
-			var query = msg.author.id;
+			let query = msg.author.id;
 
 			// Options for Fuse
-			var fuseOptions = {
+			let fuseOptions = {
 				shouldSort: true,
 				includeScore: true,
 				threshold: 0.3,
@@ -48,8 +61,8 @@ module.exports = {
 			};
 
 			// Instantiate Fuse, do the search
-			var fuse = new Fuse( data.data, fuseOptions );
-			var results = fuse.search(query);
+			let fuse = new Fuse( data.data, fuseOptions );
+			let results = fuse.search(query);
 
 			// If nothing found, quit out
 			if ( ! results.length ) {
@@ -60,38 +73,29 @@ module.exports = {
 			}
 
 
-			var result = results[0].item;
+			let result = results[0].item;
 
 
 			embed.setTitle( 'Stock List' )
 				.setDescription( 'Otsuildagne’s rules of purchase:\n```1. One of each item available per customer. \n2. For item value appraisals or more specific item acquisitions, please schedule a meeting for 25 gp. \n3. Take off your shoes at the door.```' );
 
-			const seed = fn.weeksBetween( new Date(), new Date(2019, 12, 24) );
-
 			// Set random seed for all items
-			items = shuffleSeed.shuffle( magic, seed );
+			let seed            = fn.weeksBetween( new Date(), new Date(2019, 12, 24) );
+			let itemsThisWeek   = shuffleSeed.shuffle( magic, seed ).slice(0,5);
+			let recipesThisWeek = shuffleSeed.shuffle( magic, seed ).slice(5,8);
+			let itemsLastWeek   = shuffleSeed.shuffle( magic, seed - 1 ).slice(0,4);
+			let items           = itemsThisWeek.concat(itemsLastWeek, recipesThisWeek);
 
-			items.slice(1,10).forEach( function(row) {
-				if ( ! fn.canBuy( parseInt(result['Level']), row.rarity ) ) {
-					return;
-				}
+			items.slice(0,9).forEach( function(row) {
+				let availability = fn.canBuy( parseInt(result['Level']), row.rarity );
 
-				if ( row["Type"] === 'Spell Scrolls' ) {
-					return;
-				}
-
-				embed.addField( row.item, `${row.dmpg} gp\n${row.rarity}`, true );
+				embed.addField( `${row.item} (${row.rarity})`, `:moneybag: **${row.dmpg} gp**\n${availability}`, true );
 			} );
 
 			embed.addField('—', '**Formulae:**');
 
-			items.slice(10,13).forEach( function(row) {
-
-				if ( row.Type === 'Spell Scrolls' ) {
-					return;
-				}
-
-				embed.addField( `Crafting Recipe: ${row.item}`, `200 gp\n${row.rarity}`, true );
+			items.slice(9,12).forEach( function(row) {
+				embed.addField( `Crafting Formula: ${row.item} (${row.rarity})`, `:moneybag: **200 gp**\nAvailable!`, true );
 			} );
 
 			message.channel.send(
