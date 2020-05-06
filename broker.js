@@ -64,16 +64,12 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
-    const args = message.content.split(/ +/);
-
     if ( message.channel.id !== process.env.BROKER && message.channel.type === 'text' ) {
+        return;
+    }
 
-        if ( ! message.isMemberMentioned( bot.user ) ) {
-            return;
-        } else {
-            args.shift();
-        }
-
+    if ( ! message.mentions.users.has( bot.user.id ) && message.channel.type === 'text' ) {
+        return;
     }
 
     if ( message.author.id === bot.user.id ) {
@@ -83,6 +79,12 @@ bot.on('message', message => {
     if ( message.content.replace(/ *\[[^\]]*]/g, "") === '' ) {
         return;
     }
+
+	let args = message.content.split(/ +/);
+
+    args = args.filter( arg => {
+        return ! arg.match(/<[^>]*>/g);
+    } );
 
 	let commandName = args.shift().toLowerCase();
 

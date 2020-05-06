@@ -3,27 +3,38 @@
         "Sorry dear, I’m not sure what you’re asking.",
         "Sorry darling, you’ll have to speak up, I’m wearing a towel.",
         "Sorry my love, but you don’t seem to be making much sense.",
-        "Sorry precious, but please can you try again in Common?"
+        "Sorry precious, but please can you try again in Common?",
+        "Apologies my dear, I can’t make sense of what you’re asking."
     ],
     "error_item_not_found": [
-        "Try `appraise` followed by the name of your item. Either that or I haven’t come across one of those before, which is highly unlikely."
+        "Try `appraise` followed by the name of your item. Either that or I haven’t come across one of those before, which is highly unlikely.",
+        "Try `appraise` followed by the name of your item. You are sure it’s a magic item, correct?"
     ],
     "error_player_not_found": [
-        "Sorry I don’t know who you are. Please could you contact a DM?"
+        "Sorry my love, I don’t know who you are. Please could you contact a GM?"
     ],
     "evaluation": [
         "My offer for your %s is %s gold pieces.",
         "Oh, I’d say your %s is worth %s gold pieces.",
-        "Hmm… but rusty isn’t it? But it is quite a quaint %s… %s gold pieces."
+        "Hmm… bit rusty isn’t it? But it is quite a nice %s… %s gold pieces.",
+        "Hmm… bit old isn’t it? But it is a lovely %s… How about %s gold pieces?"
     ],
     "items_in_stock": [
-        "Hello darling, here’s what I have for sale this week…",
-        "Hello dear, here’s what’s in stock…"
+        "Here’s what I have for sale this week.",
+        "Here’s what’s in stock.",
+        "Voila, the latest stock list.",
+        "Here we are! Let me know if you see anything you like, darling.",
+        "Here we go! One stock list, as requested.",
+        "There you go. Some good ones on there this week.",
+        "Quite proud of my acquisitions this week.",
+        "Trust me, some of these were quite hard to get a hold of.",
+        "Only the best wares from Otsuildagne."
     ],
     "loading": [
         "One moment please…",
         "Bear with me one moment…",
         "Let me just see…",
-        "Ah—I know I left that somewhere…"
+        "Ah—I know I left that somewhere…",
+        "As they say in Ryushu, ‘chotto matte kudasai’…"
     ]
 }
