@@ -73,7 +73,7 @@ module.exports = {
 				reply += ' You sense this is a reasonable offer.';
 			}
 
-			msg.reply( reply );
+			msg.reply( reply + ' Please deduct the 25gp appraisal fee from your inventory.' );
 
 		})(`https://rolz.org/api/?${formula}.json`);
 

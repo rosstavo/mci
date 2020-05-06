@@ -17,11 +17,13 @@
         "Hmm… but rusty isn’t it? But it is quite a quaint %s… %s gold pieces."
     ],
     "items_in_stock": [
-        "Hello darling, here’s what I have for sale this week…"
+        "Hello darling, here’s what I have for sale this week…",
+        "Hello dear, here’s what’s in stock…"
     ],
     "loading": [
         "One moment please…",
         "Bear with me one moment…",
-        "Let me just see…"
+        "Let me just see…",
+        "Ah—I know I left that somewhere…"
     ]
 }

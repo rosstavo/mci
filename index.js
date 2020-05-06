@@ -64,11 +64,11 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
-    if ( message.channel.id !== process.env.BROKER && message.channel.type !== 'text' ) {
+    if ( message.channel.id !== process.env.BROKER && message.channel.type === 'text' ) {
         return;
     }
 
-    if ( ! message.isMemberMentioned( bot.user ) && message.channel.type !== 'text' ) {
+    if ( ! message.mentions.has( bot.user ) && message.channel.type === 'text' ) {
         return;
     }
 
@@ -77,6 +77,8 @@ bot.on('message', message => {
     }
 
 	const args = message.content.split(/ +/);
+
+    console.log( args );
 
 	let commandName = args.shift().toLowerCase();
 
