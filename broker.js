@@ -84,7 +84,11 @@ bot.on('message', message => {
         return arg.replace(/[^A-Za-z0-9]/g, '');
     } );
 
-	let commandName = args.shift().toLowerCase();
+    let commandName = 'help';
+
+    if ( args.length ) {
+        commandName = args.shift().toLowerCase();
+    }
 
 	let command = bot.commands.get(commandName);
 

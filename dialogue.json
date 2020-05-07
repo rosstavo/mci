@@ -18,7 +18,7 @@
         "Hmm… bit old isn’t it? But it is a lovely %s.",
         "If I’ve understood, you’re offering this %s, correct?",
         "I do believe this is a %s.",
-        "Ah, I think I know this… %s, correct?"
+        "Ah, I think I know what this is… %s, correct?"
     ],
     "evaluation_price": [
         "%s gold pieces.",
@@ -28,6 +28,16 @@
         "I would buy for %s gold pieces.",
         "My offer is %s gold pieces.",
         "%s gold pieces is my offer."
+    ],
+    "help_generic": [
+        "Hello darling. Try asking me `What's in stock?` or to `Appraise [your item]`. Make sure to say my name (@Broker) so I know you’re talking to me.",
+        "Hello dear. If you don’t know where to start, try `What's in stock?` or `Appraise [your item]`. Don’t forget to call my name (@Broker), otherwise I might not know you’re talking to me.",
+        "But of course precious. You can always try `What's in stock?` or `Appraise [your item]`. Address me if you please by saying my name (@Broker) with your request."
+    ],
+    "help_flavour": [
+        "I do understand some Common, although I confess I am a college dropout, so bear with me.",
+        "You will have to speak up though, and speak in plain Common.",
+        "Just make sure you remove your shoes before you step up."
     ],
     "items_in_stock": [
         "Here’s what I have for sale this week.",
