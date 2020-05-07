@@ -5,6 +5,7 @@ module.exports = {
 		'please can you appraise',
 		'how much is this worth',
 		'how much is my',
+		'how much for my',
 		'how much',
 		'what is this worth',
 		'please appraise'
@@ -63,7 +64,7 @@ module.exports = {
 
 			response = JSON.parse( response );
 
-			var reply = fn.formatDialogue( fn.arrayRand( dialogue.evaluation ), [ result.item, response.result.toLocaleString() ] );
+			var reply = fn.formatDialogue( fn.arrayRand( dialogue.evaluation_item ) + ' ' + fn.arrayRand( dialogue.evaluation_price ), [ result.item, response.result.toLocaleString() ] );
 
 			if ( parseInt(response.result) > parseInt(result.dmpg.toString().replace(',','')) / 2 ) {
 				reply += ' You sense this is offer is above average.';
@@ -73,7 +74,7 @@ module.exports = {
 				reply += ' You sense this is a reasonable offer.';
 			}
 
-			msg.reply( reply + ' Please deduct the 25gp appraisal fee from your inventory.' );
+			msg.reply( reply + '\n\n(Please deduct the 25gp appraisal fee from your inventory.)' );
 
 		})(`https://rolz.org/api/?${formula}.json`);
 

@@ -72,30 +72,75 @@ module.exports = {
 			   return;
 			}
 
-
 			let result = results[0].item;
 
+			embed.setTitle( 'Stock List' );
 
-			embed.setTitle( 'Stock List' )
-				.setDescription( 'Otsuildagne’s rules of purchase:\n```1. One of each item available per customer. \n2. For item value appraisals or more specific item acquisitions, please schedule a meeting for 25 gp. \n3. Take off your shoes at the door.```' );
+			// let availability = fn.canBuy( parseInt(result['Level']), row.rarity );
+
+			embed.setDescription( 'Otsuildagne’s rules of purchase…' );
+
+			embed.addField( 'Rule 1:', 'One of each item available per customer.', true );
+			embed.addField( 'Rule 2:', 'For item value appraisals or more specific item acquisitions, please schedule a meeting for 25 gp.', true );
+			embed.addField( 'Rule 3:', 'Take off your shoes at the door.', true );
 
 			// Set random seed for all items
-			let seed            = fn.weeksBetween( new Date(), new Date(2019, 12, 24) );
-			let itemsThisWeek   = shuffleSeed.shuffle( magic, seed ).slice(0,5);
-			let recipesThisWeek = shuffleSeed.shuffle( magic, seed ).slice(5,8);
-			let itemsLastWeek   = shuffleSeed.shuffle( magic, seed - 1 ).slice(0,4);
-			let items           = itemsThisWeek.concat(itemsLastWeek, recipesThisWeek);
+			let seed                  = fn.weeksBetween( new Date(), new Date(2019, 12, 24) );
 
-			items.slice(0,9).forEach( function(row) {
-				let availability = fn.canBuy( parseInt(result['Level']), row.rarity );
+			let itemsThisWeek         = shuffleSeed.shuffle( magic, seed );
+			let itemsLastWeek         = shuffleSeed.shuffle( magic, seed - 1 );
 
-				embed.addField( `${row.item} (${row.rarity})`, `:moneybag: **${row.dmpg} gp**\n${availability}`, true );
+			let commonItemsThisWeek   = itemsThisWeek.filter( item => item.rarity === 'Common' ).slice(0,2);
+			let commonItemsLastWeek   = itemsLastWeek.filter( item => item.rarity === 'Common' ).slice(0,2);
+
+			let uncommonItemsThisWeek = itemsThisWeek.filter( item => item.rarity === 'Uncommon' ).slice(0,1);
+			let uncommonItemsLastWeek = itemsLastWeek.filter( item => item.rarity === 'Uncommon' ).slice(0,1);
+
+			let rareItemsThisWeek     = itemsThisWeek.filter( item => item.rarity === 'Rare' ).slice(0,1);
+			let rareItemsLastWeek     = itemsLastWeek.filter( item => item.rarity === 'Rare' ).slice(0,1);
+
+			let veryRareItemsThisWeek = itemsThisWeek.filter( item => item.rarity === 'Very Rare' ).slice(0,1);
+
+			let forSale = [].concat(
+				commonItemsThisWeek,
+				commonItemsLastWeek,
+				uncommonItemsThisWeek,
+				uncommonItemsLastWeek,
+				rareItemsThisWeek,
+				rareItemsLastWeek,
+				veryRareItemsThisWeek
+			).sort( fn.compareValues('avg') );
+
+			let recipesThisWeek = itemsThisWeek.filter( item => item.rarity !== 'Common' ).slice(-3);
+			let recipesLastWeek = itemsLastWeek.filter( item => item.rarity !== 'Common' ).slice(-3);
+			let recipes			= recipesThisWeek.concat(recipesLastWeek).sort( fn.compareValues('avg') );
+
+			embed.addField('—', `\u200b\n:crossed_swords: **Items**\n\n${result['Player']} is Level ${result['Level']} and can purchase Items up to a rarity of ${process.env[fn.canBuy(result['Level']).toUpperCase().replace( /[^a-zA-Z0-9]/ , "")]} **${fn.canBuy(result['Level'])}**.` );
+
+			forSale.forEach( function(row) {
+
+				let emoji = process.env[row.rarity.toUpperCase().replace( /[^a-zA-Z0-9]/ , "")];
+
+				embed.addField(
+					`**${row.item}**`,
+					`${emoji} ${row.rarity}\n${process.env.COIN} **${row.dmpg} gp**\n\u200b`,
+					true
+				);
+
 			} );
 
-			embed.addField('—', '**Formulae:**');
+			embed.addField('—', '\u200b\n:scroll: **Formulae**\n\nFormulae can be purchased at any Level.');
 
-			items.slice(9,12).forEach( function(row) {
-				embed.addField( `Crafting Formula: ${row.item} (${row.rarity})`, `:moneybag: **200 gp**\nAvailable!`, true );
+			recipes.forEach( function(row) {
+
+				let emoji = process.env[row.rarity.toUpperCase().replace( /[^a-zA-Z0-9]/ , "")];
+
+				embed.addField(
+					`\nCrafting Formula:\n**${row.item}**`,
+					`${emoji} ${row.rarity}\n${process.env.COIN} **200 gp**\n\u200b`,
+					true
+				);
+
 			} );
 
 			message.channel.send(

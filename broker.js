@@ -47,7 +47,7 @@ bot.on('ready', () => {
 
     bot.user.setPresence({
         game: {
-            name: '#broker',
+            name: '@Broker in #broker',
             type: "LISTENING"
         }
     });
@@ -56,7 +56,7 @@ bot.on('ready', () => {
 
     embed.setTitle( 'The Broker is open for business.' );
 
-    // bot.channels.get( process.env.LOGS ).send( embed );
+    // bot.channels.get( process.env.BROKER ).send( 'Ready' );
 });
 
 /**
@@ -76,14 +76,12 @@ bot.on('message', message => {
         return;
     }
 
-    if ( message.content.replace(/ *\[[^\]]*]/g, "") === '' ) {
-        return;
-    }
-
 	let args = message.content.split(/ +/);
 
     args = args.filter( arg => {
         return ! arg.match(/<[^>]*>/g);
+    } ).map( arg => {
+        return arg.replace(/[^A-Za-z0-9]/g, '');
     } );
 
 	let commandName = args.shift().toLowerCase();

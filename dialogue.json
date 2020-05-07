@@ -13,11 +13,21 @@
     "error_player_not_found": [
         "Sorry my love, I don’t know who you are. Please could you contact a GM?"
     ],
-    "evaluation": [
-        "My offer for your %s is %s gold pieces.",
-        "Oh, I’d say your %s is worth %s gold pieces.",
-        "Hmm… bit rusty isn’t it? But it is quite a nice %s… %s gold pieces.",
-        "Hmm… bit old isn’t it? But it is a lovely %s… How about %s gold pieces?"
+    "evaluation_item": [
+        "Hmm… bit rusty isn’t it? But it is quite a nice %s.",
+        "Hmm… bit old isn’t it? But it is a lovely %s.",
+        "If I’ve understood, you’re offering this %s, correct?",
+        "I do believe this is a %s.",
+        "Ah, I think I know this… %s, correct?"
+    ],
+    "evaluation_price": [
+        "%s gold pieces.",
+        "It looks to be worth about %s gold pieces.",
+        "My estimate? %s gold pieces.",
+        "What a lovely specimen! How about %s gold pieces?",
+        "I would buy for %s gold pieces.",
+        "My offer is %s gold pieces.",
+        "%s gold pieces is my offer."
     ],
     "items_in_stock": [
         "Here’s what I have for sale this week.",
@@ -35,6 +45,7 @@
         "Bear with me one moment…",
         "Let me just see…",
         "Give me a second…",
-        "As they say in Ryushu, ‘chotto matte kudasai’…"
+        "Give me two ticks…",
+        "I’ll be right with you…"
     ]
 }

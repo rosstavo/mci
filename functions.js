@@ -60,8 +60,8 @@ module.exports = {
     },
     formatEmbed: (embed) => {
 
-        embed.setFooter('No refunds.')
-            .setColor(0xf2edd8);
+        embed.setFooter('To buy an item, add it to your inventory and subtract the gold amount.')
+            .setColor(0xbcaaa4);
 
         return embed;
     },
@@ -77,7 +77,7 @@ module.exports = {
         while (m) {
 
             // Pick a remaining element…
-            i = Math.floor( rand * m-- ); // <-- MODIFIED LINE
+            i = Math.floor(rand * m--); // <-- MODIFIED LINE
 
             // And swap it with the current element.
             t = array[m];
@@ -92,32 +92,56 @@ module.exports = {
         var x = Math.sin(seed++) * 10000;
         return x - Math.floor(x);
     },
-    arrayRand: ( arr ) => {
+    arrayRand: (arr) => {
         return arr[Math.floor(Math.random() * arr.length)];
     },
-    canBuy: (level, rarity) => {
+    canBuy: (level) => {
 
-        if ( rarity === 'Very Rare' && level < 11 ) {
-            return ':lock: Level 12';
+        if (level > 11) {
+            return 'Very Rare';
         }
 
-        if ( rarity === 'Rare' && level < 8 ) {
-            return ':lock: Level 9';
+        if (level > 8) {
+            return 'Rare';
         }
 
-        if ( rarity === 'Uncommon' && level < 4 ) {
-            return ':lock: Level 5';
+        if (level > 4) {
+            return 'Uncommon';
         }
 
-        return 'Available!';
+        return 'Common';
     },
     formatDialogue: (str, words = false) => {
         const vsprintf = require('sprintf-js').vsprintf;
 
-        if ( words.length ) {
-            str = vsprintf( str, words );
+        if (words.length) {
+            str = vsprintf(str, words);
         }
 
         return `**“${str}”**`;
+    },
+    compareValues: (key, order = 'asc') => {
+        return function innerSort(a, b) {
+            if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+                // property doesn't exist on either object
+                return 0;
+            }
+
+            const varA = (typeof a[key] === 'string') ?
+                a[key].toUpperCase() : a[key];
+            const varB = (typeof b[key] === 'string') ?
+                b[key].toUpperCase() : b[key];
+
+            let comparison = 0;
+            if (varA > varB) {
+                comparison = 1;
+            } else if (varA < varB) {
+                comparison = -1;
+            }
+            return (
+                (order === 'desc') ? (comparison * -1) : comparison
+            );
+        };
     }
+
 };
