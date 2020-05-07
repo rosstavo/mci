@@ -142,6 +142,9 @@ module.exports = {
                 (order === 'desc') ? (comparison * -1) : comparison
             );
         };
+    },
+    numberWithCommas: (x) => {
+        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }
 
 };
