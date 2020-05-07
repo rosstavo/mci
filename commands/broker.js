@@ -31,6 +31,10 @@ module.exports = {
 				return false;
 			}
 
+			if ( item['exclude'] ) {
+				return false;
+			}
+
 			return true;
 		} );
 
@@ -123,7 +127,7 @@ module.exports = {
 
 				embed.addField(
 					`**${row.item}**`,
-					`${emoji} ${row.rarity}\n${process.env.COIN} **${row.dmpg} gp**\n\u200b`,
+					`${emoji} ${row.rarity}\n${process.env.COIN} **${fn.numberWithCommas(row.dmpg)} gp**\n\u200b`,
 					true
 				);
 
