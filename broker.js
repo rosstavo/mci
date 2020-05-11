@@ -54,9 +54,12 @@ bot.on('ready', () => {
 
     var embed = fn.formatEmbed( new RichEmbed() );
 
-    embed.setTitle( 'The Broker is open for business.' );
+    bot.channels.get( process.env.BROKER ).send( 'The Broker is open for business.' ).then( message => {
 
-    // bot.channels.get( process.env.BROKER ).send( 'Ready' );
+        bot.commands.get('stock').execute(message, [], embed);
+
+    });
+
 });
 
 /**
@@ -64,11 +67,17 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
-    if ( message.channel.id !== process.env.BROKER && message.channel.type === 'text' ) {
+    let commandName = false;
+
+    // if ( bot.user.lastMessage != null && ! fn.isToday( bot.user.lastMessage.createdAt ) ) {
+    //     commandName = 'stock';
+    // }
+
+    if ( ! commandName && message.channel.id !== process.env.BROKER && message.channel.type === 'text' ) {
         return;
     }
 
-    if ( ! message.mentions.users.has( bot.user.id ) && message.channel.type === 'text' ) {
+    if ( ! commandName && ! message.mentions.users.has( bot.user.id ) && message.channel.type === 'text' ) {
         return;
     }
 
@@ -84,9 +93,7 @@ bot.on('message', message => {
         return arg.replace(/[^A-Za-z0-9]/g, '');
     } );
 
-    let commandName = 'help';
-
-    if ( args.length ) {
+    if ( args.length && ! commandName ) {
         commandName = args.shift().toLowerCase();
     }
 

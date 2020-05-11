@@ -68,70 +68,143 @@ module.exports = {
 			let fuse = new Fuse( data.data, fuseOptions );
 			let results = fuse.search(query);
 
-			// If nothing found, quit out
-			if ( ! results.length ) {
-
-			   msg.reply( fn.formatDialogue( fn.arrayRand( dialogue.error_player_not_found ) ) );
-
-			   return;
-			}
-
-			let result = results[0].item;
 
 			embed.setTitle( 'Stock List' );
 
-			// let availability = fn.canBuy( parseInt(result['Level']), row.rarity );
-
 			embed.setDescription( 'Otsuildagne’s rules of purchase…' );
 
-			embed.addField( 'Rule 1:', 'One of each item available per customer.', true );
-			embed.addField( 'Rule 2:', 'For item value appraisals or more specific item acquisitions, please schedule a meeting for 25 gp.', true );
+			embed.addField( 'Rule 1:', 'One of each item available per customer. (Ammunition limit 5.)', true );
+			embed.addField( 'Rule 2:', `For item value appraisals or more specific items, please schedule a meeting for ${process.env.COIN}\`25 gp\`.`, true );
 			embed.addField( 'Rule 3:', 'Take off your shoes at the door.', true );
 
 			// Set random seed for all items
-			let seed                  = fn.weeksBetween( new Date(), new Date(2019, 12, 24) );
+			let daySeed               = fn.daysBetween( new Date(2020, 4, 11), new Date() );
+			let weekSeed              = Math.floor(daySeed / 7);
+			let fortnightSeed         = Math.floor(daySeed / 14);
 
-			let itemsThisWeek         = shuffleSeed.shuffle( magic, seed );
-			let itemsLastWeek         = shuffleSeed.shuffle( magic, seed - 1 );
+			let itemsToday = shuffleSeed.shuffle( magic, daySeed ).map( function(el) {
+				var o = Object.assign({}, el);
+				o.isNew = true;
+				return o;
+			} );
 
-			let commonItemsThisWeek   = itemsThisWeek.filter( item => item.rarity === 'Common' ).slice(0,2);
-			let commonItemsLastWeek   = itemsLastWeek.filter( item => item.rarity === 'Common' ).slice(0,2);
+			let itemsYesterday        = shuffleSeed.shuffle( magic, daySeed - 1 ).map( function(el) {
+				var o = Object.assign({}, el);
+				o.lastChance = true;
+				return o;
+			} );
 
-			let uncommonItemsThisWeek = itemsThisWeek.filter( item => item.rarity === 'Uncommon' ).slice(0,1);
-			let uncommonItemsLastWeek = itemsLastWeek.filter( item => item.rarity === 'Uncommon' ).slice(0,1);
+			let itemsThisWeek         = shuffleSeed.shuffle( magic, weekSeed ).map( function(el) {
+				var o = Object.assign({}, el);
 
-			let rareItemsThisWeek     = itemsThisWeek.filter( item => item.rarity === 'Rare' ).slice(0,1);
-			let rareItemsLastWeek     = itemsLastWeek.filter( item => item.rarity === 'Rare' ).slice(0,1);
+				if ( weekSeed !== Math.floor((daySeed - 1) / 7) ) {
+					o.isNew = true;
+				}
+				return o;
+			} );
 
-			let veryRareItemsThisWeek = itemsThisWeek.filter( item => item.rarity === 'Very Rare' ).slice(0,1);
+			let itemsLastWeek         = shuffleSeed.shuffle( magic, weekSeed - 1 ).map( function(el) {
+				var o = Object.assign({}, el);
+
+				if ( weekSeed !== Math.floor((daySeed + 1) / 7) ) {
+					o.lastChance = true;
+				}
+				return o;
+			} );
+
+			let itemsThisFortnight    = shuffleSeed.shuffle( magic, fortnightSeed ).map( function(el) {
+				var o = Object.assign({}, el);
+
+				if ( fortnightSeed !== Math.floor((daySeed - 1) / 14) ) {
+					o.isNew = true;
+				}
+
+				if ( fortnightSeed !== Math.floor((daySeed + 1) / 14) ) {
+					o.lastChance = true;
+				}
+				return o;
+			} );
+
+			let dailyitems = [].concat(
+				itemsToday.filter( item => item.rarity === 'Common' ).slice(0,2),
+				itemsYesterday.filter( item => item.rarity === 'Common' ).slice(0,2),
+				itemsToday.filter( item => item.rarity === 'Uncommon' ).slice(0,1),
+				itemsYesterday.filter( item => item.rarity === 'Uncommon' ).slice(0,1),
+			);
+
+			let weeklyItems = [].concat(
+				itemsThisWeek.filter( item => item.rarity === 'Rare' ).slice(0,1),
+				itemsLastWeek.filter( item => item.rarity === 'Rare' ).slice(0,1)
+			);
+
+			let fortnightlyItems = itemsThisFortnight.filter( item => item.rarity === 'Very Rare' ).slice(0,1);
 
 			let forSale = [].concat(
-				commonItemsThisWeek,
-				commonItemsLastWeek,
-				uncommonItemsThisWeek,
-				uncommonItemsLastWeek,
-				rareItemsThisWeek,
-				rareItemsLastWeek,
-				veryRareItemsThisWeek
+				dailyitems,
+				weeklyItems,
+				fortnightlyItems
 			).sort( fn.compareValues('avg') );
 
-			let recipesThisWeek = itemsThisWeek.filter( item => item.rarity !== 'Common' ).slice(-3);
-			let recipesLastWeek = itemsLastWeek.filter( item => item.rarity !== 'Common' ).slice(-3);
-			let recipes			= recipesThisWeek.concat(recipesLastWeek).sort( fn.compareValues('avg') );
+			let playerString = `The items you can purchase correspond to your level.\n\n${process.env.COMMON} **Common**: any level\n${process.env.UNCOMMON} **Uncommon**: level 5 and above\n${process.env.RARE} **Rare**: level 9 and above\n${process.env.VERYRARE} **Very Rare**: level 12 and above\n\n`
 
-			embed.addField('—', `\u200b\n:crossed_swords: **Items**\n\n${result['Player']} is Level ${result['Level']} and can purchase Items up to a rarity of ${process.env[fn.canBuy(result['Level']).toUpperCase().replace( /[^a-zA-Z0-9]/ , "")]} **${fn.canBuy(result['Level'])}**.` );
+			if ( results.length ) {
+
+				let result = results[0].item;
+
+				playerString = `${result['Player']} is Level ${result['Level']} and can purchase Items up to a rarity of ${process.env[fn.canBuy(result['Level']).toUpperCase().replace( /[^a-zA-Z0-9]/ , "")]} ${fn.canBuy(result['Level'])}.`;
+
+			}
+
+			embed.addField('—', `\u200b\n:crossed_swords: **Items**\n\n${playerString}` );
+
 
 			forSale.forEach( function(row) {
 
 				let emoji = process.env[row.rarity.toUpperCase().replace( /[^a-zA-Z0-9]/ , "")];
 
+				let note = '';
+
+				if ( row.isNew ) {
+					note = '\n:star2: New in stock!';
+				}
+
+				if ( row.lastChance ) {
+					note = '\n:clock11: Last chance!';
+				}
+
 				embed.addField(
-					`**${row.item}**`,
-					`${emoji} ${row.rarity}\n${process.env.COIN} **${fn.numberWithCommas(row.dmpg)} gp**\n\u200b`,
+					row['Type'],
+					`**${row.item}**\n${emoji} ${row.rarity}\n${process.env.COIN}\`${fn.numberWithCommas(row.dmpg)} gp\`${note}\n\u200b`,
 					true
 				);
 
 			} );
+
+			/**
+			 * Formulae
+			 */
+			let recipesThisWeek = itemsThisWeek.filter( item => item.rarity !== 'Common' ).slice(-3).map( function(el) {
+				var o = Object.assign({}, el);
+
+				if ( weekSeed !== Math.floor((daySeed - 1) / 7) ) {
+					o.isNew = true;
+				}
+				return o;
+			} );
+
+			let recipesLastWeek = itemsLastWeek.filter( item => item.rarity !== 'Common' ).slice(-3).map( function(el) {
+				var o = Object.assign({}, el);
+
+				if ( weekSeed !== Math.floor((daySeed + 1) / 7) ) {
+					o.lastChance = true;
+				}
+				return o;
+			} );
+
+			let recipes = [].concat(
+				recipesThisWeek,
+				recipesLastWeek
+			).sort( fn.compareValues('avg') );
 
 			embed.addField('—', '\u200b\n:scroll: **Formulae**\n\nFormulae can be purchased at any Level.');
 
@@ -139,9 +212,19 @@ module.exports = {
 
 				let emoji = process.env[row.rarity.toUpperCase().replace( /[^a-zA-Z0-9]/ , "")];
 
+				let note = '';
+
+				if ( row.isNew ) {
+					note = '\n:star2: New in stock!';
+				}
+
+				if ( row.lastChance ) {
+					note = '\n:clock11: Last chance!';
+				}
+
 				embed.addField(
-					`\nCrafting Formula:\n**${row.item}**`,
-					`${emoji} ${row.rarity}\n${process.env.COIN} **200 gp**\n\u200b`,
+					'Crafting Formula',
+					`**${row.item}**\n${emoji} ${row.rarity}\n${process.env.COIN} \`200 gp\`${note}\n\u200b`,
 					true
 				);
 

@@ -65,6 +65,9 @@ module.exports = {
 
         return embed;
     },
+    daysBetween: (d1, d2) => {
+        return Math.round((d2 - d1) / (24 * 60 * 60 * 1000));
+    },
     weeksBetween: (d1, d2) => {
         return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
     },
@@ -145,6 +148,12 @@ module.exports = {
     },
     numberWithCommas: (x) => {
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    },
+    isToday: (someDate) => {
+        const today = new Date()
+        return someDate.getDate() == today.getDate() &&
+            someDate.getMonth() == today.getMonth() &&
+            someDate.getFullYear() == today.getFullYear();
     }
 
 };
