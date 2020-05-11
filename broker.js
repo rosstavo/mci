@@ -52,7 +52,15 @@ bot.on('ready', () => {
         }
     });
 
-    var embed = fn.formatEmbed( new RichEmbed() );
+    let d = new Date(new Date().toUTCString().substr(0, 25)); // current time UTC
+    let hours = d.getHours();
+    let mins = d.getMinutes();
+
+    if ( hours > 0 && mins > 5 ) {
+        return;
+    }
+
+    let embed = fn.formatEmbed( new RichEmbed() );
 
     bot.channels.get( process.env.BROKER ).send( 'The Broker is open for business.' ).then( message => {
 
