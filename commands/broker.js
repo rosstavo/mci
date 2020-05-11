@@ -78,7 +78,7 @@ module.exports = {
 			embed.addField( 'Rule 3:', 'Take off your shoes at the door.', true );
 
 			// Set random seed for all items
-			let daySeed               = fn.daysBetween( new Date(2020, 4, 11), new Date() );
+			let daySeed               = fn.daysBetween( new Date("May 11 2020 00:00:00 GMT"), new Date(new Date().toUTCString().substr(0, 25)) );
 			let weekSeed              = Math.floor(daySeed / 7);
 			let fortnightSeed         = Math.floor(daySeed / 14);
 
