@@ -29,4 +29,4 @@ function listApps() {
 new CronJob('0 0 0 * * *', function() {
     console.log('Midnight UTC, Restarting zombie app');
     restartApp();
-}, null, true, 'America/Los_Angeles');
+}, null, true, 'UTC');
