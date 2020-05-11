@@ -230,6 +230,16 @@ module.exports = {
 
 			} );
 
+			let nextMidnight = new Date();
+			nextMidnight.setUTCHours(24,0,0,0);
+
+			let now = new Date();
+
+			let remainingTimeObj = fn.msToTime(nextMidnight.getTime() - now.getTime());
+
+			embed.setFooter( `The Broker will acquire new stock in ${remainingTimeObj.h} hour(s) and ${remainingTimeObj.m} minute(s).` );
+
+
 			message.channel.send(
 				fn.formatDialogue( fn.arrayRand( dialogue.items_in_stock ) ),
 				{ embed: embed }
