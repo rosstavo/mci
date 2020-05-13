@@ -52,7 +52,7 @@ bot.on('ready', () => {
         }
     });
 
-    let d = new Date(new Date().toUTCString().substr(0, 25)); // current time UTC
+    let d = new Date(new Date().toUTCString()); // current time UTC
     let hours = d.getHours();
     let mins = d.getMinutes();
 
