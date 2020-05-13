@@ -17,8 +17,14 @@ module.exports = {
 		const shuffleSeed = require('shuffle-seed');
 		const Papa        = require('papaparse');
 
+		/**
+		 * Import dialogue
+		 */
 		let dialogue = require('../dialogue.json');
 
+		/**
+		 * Import magic items & filter
+		 */
 		let magic = require('../magic.json');
 
 		magic = magic.filter( item => {
@@ -38,16 +44,31 @@ module.exports = {
 			return true;
 		} );
 
+		/**
+		 * Format the embed in advance
+		 */
 		embed = fn.formatEmbed(embed);
 
+		/**
+		 * Reply to message and load player details
+		 */
 		msg.reply( fn.formatDialogue( fn.arrayRand(dialogue.loading) ) ).then( message => ( async (url) => {
 
+			/**
+			 * Load player spreadsheet
+			 */
 			let csv = await fn.getScript(url);
 
+			/**
+			 * Parse player spreadsheet
+			 */
 			let data = Papa.parse( csv, {
 				"header": true
 			} );
 
+			/**
+			 * Check message author ID against spreadsheet
+			 */
 			let query = msg.author.id;
 
 			// Options for Fuse
@@ -64,11 +85,15 @@ module.exports = {
 				]
 			};
 
-			// Instantiate Fuse, do the search
+			/**
+			 * Instantiate Fuse, do the search
+			 */
 			let fuse = new Fuse( data.data, fuseOptions );
 			let results = fuse.search(query);
 
-
+			/**
+			 * Prepare the embed
+			 */
 			embed.setTitle( 'Stock List' );
 
 			embed.setDescription( 'Otsuildagne’s rules of purchase…' );
@@ -77,8 +102,10 @@ module.exports = {
 			embed.addField( 'Rule 2:', `For item value appraisals or more specific items, please schedule a meeting for ${process.env.COIN}\`25 gp\`.`, true );
 			embed.addField( 'Rule 3:', 'Take off your shoes at the door.', true );
 
-			// Set random seed for all items
-			let daySeed               = fn.daysBetween( new Date("May 11 2020 00:00:00 GMT"), new Date(new Date().toUTCString().substr(0, 25)) );
+			/**
+			 * Set random seeds for all items
+			 */
+			let daySeed               = fn.daysBetween( new Date("May 11 2020 00:00:00 GMT"), new Date(new Date().toUTCString()) );
 			let weekSeed              = Math.floor(daySeed / 7);
 			let fortnightSeed         = Math.floor(daySeed / 14);
 
@@ -238,7 +265,6 @@ module.exports = {
 			let remainingTimeObj = fn.msToTime(nextMidnight.getTime() - now.getTime());
 
 			embed.setFooter( `The Broker will acquire new stock in ${remainingTimeObj.h} hour(s) and ${remainingTimeObj.m} minute(s).` );
-
 
 			message.channel.send(
 				fn.formatDialogue( fn.arrayRand( dialogue.items_in_stock ) ),
