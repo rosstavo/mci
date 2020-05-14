@@ -105,7 +105,7 @@ module.exports = {
 			/**
 			 * Set random seeds for all items
 			 */
-			let daySeed               = fn.daysBetween( new Date("May 12 2020 00:00:00 GMT"), new Date(new Date().toUTCString()) );
+			let daySeed               = fn.daysBetween( new Date("May 11 2020 00:00:00 GMT"), new Date(new Date().toUTCString()) );
 			let weekSeed              = Math.floor(daySeed / 7);
 			let fortnightSeed         = Math.floor(daySeed / 14);
 
