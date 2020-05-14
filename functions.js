@@ -66,10 +66,10 @@ module.exports = {
         return embed;
     },
     daysBetween: (d1, d2) => {
-        return Math.round((d2 - d1) / (24 * 60 * 60 * 1000));
+        return Math.floor((d2 - d1) / (24 * 60 * 60 * 1000));
     },
     weeksBetween: (d1, d2) => {
-        return Math.round((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
+        return Math.floor((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
     },
     shuffle: (array, rand, callback) => {
 
