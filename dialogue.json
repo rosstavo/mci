@@ -10,8 +10,16 @@
         "Try `appraise` followed by the name of your item. Either that or I haven’t come across one of those before, which is highly unlikely.",
         "Try `appraise` followed by the name of your item. You are sure it’s a magic item, correct?"
     ],
+    "error_not_available": [
+        "You’re referring to %s, yes? Sorry my darling, I’m not able to get those in stock. Trust me, I’ve tried.",
+        "Oh yes! You mean %s? I’m afraid it’s bad news, I can’t get them in stock.",
+        "I’ve tried love, trust me. The %s is a tricky one to source. You’d be better off asking an expert in the field."
+    ],
     "error_player_not_found": [
         "Sorry my love, I don’t know who you are. Please could you contact a GM?"
+    ],
+    "error_stock_date_not_found": [
+        "You’re referring to %s, yes? Sorry my love, I don’t think I’ll be getting them in this year. You’ll have to ask an expert if you want it sooner, I’m afraid."
     ],
     "evaluation_item": [
         "Hmm… bit rusty isn’t it? But it is quite a nice %s.",
@@ -28,6 +36,18 @@
         "I would buy for %s gold pieces.",
         "My offer is %s gold pieces.",
         "%s gold pieces is my offer."
+    ],
+    "expected_stock_date_range": [
+        "You’re referring to %s, yes? Should be getting them in %s to %s weeks.",
+        "Oh yes! You mean %s? Based on my supply chains, it should be %s to %s weeks."
+    ],
+    "expected_stock_date_this_week": [
+        "You’re referring to %s, yes? Good news! I should be getting them in this week.",
+        "Oh yes! You mean %s? You won’t have to wait long, they’ll be in this week."
+    ],
+    "expected_stock_date_x_weeks": [
+        "You’re referring to %s, yes? Should be getting them in %s weeks.",
+        "Oh yes! You mean %s? Based on my supply chains, it should be %s weeks."
     ],
     "help_generic": [
         "Hello darling. Try asking me `What's in stock?` or to `Appraise [your item]`. Make sure to say my name (@Broker) so I know you’re talking to me.",

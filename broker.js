@@ -53,10 +53,8 @@ bot.on('ready', () => {
     });
 
     let d = new Date(new Date().toUTCString()); // current time UTC
-    let hours = d.getHours();
-    let mins = d.getMinutes();
 
-    if ( hours > 0 && mins > 5 ) {
+    if ( d.getHours() > 0 || d.getMinutes() > 5 ) {
         return;
     }
 

@@ -102,75 +102,6 @@ module.exports = {
 			embed.addField( 'Rule 2:', `For item value appraisals or more specific items, please schedule a meeting for ${process.env.COIN}\`25 gp\`.`, true );
 			embed.addField( 'Rule 3:', 'Take off your shoes at the door.', true );
 
-			/**
-			 * Set random seeds for all items
-			 */
-			let daySeed               = fn.daysBetween( new Date("May 11 2020 00:00:00 GMT"), new Date(new Date().toUTCString()) );
-			let weekSeed              = Math.floor(daySeed / 7);
-			let fortnightSeed         = Math.floor(daySeed / 14);
-
-			let itemsToday = shuffleSeed.shuffle( magic, daySeed ).map( function(el) {
-				var o = Object.assign({}, el);
-				o.isNew = true;
-				return o;
-			} );
-
-			let itemsYesterday        = shuffleSeed.shuffle( magic, daySeed - 1 ).map( function(el) {
-				var o = Object.assign({}, el);
-				o.lastChance = true;
-				return o;
-			} );
-
-			let itemsThisWeek         = shuffleSeed.shuffle( magic, weekSeed ).map( function(el) {
-				var o = Object.assign({}, el);
-
-				if ( weekSeed !== Math.floor((daySeed - 1) / 7) ) {
-					o.isNew = true;
-				}
-				return o;
-			} );
-
-			let itemsLastWeek         = shuffleSeed.shuffle( magic, weekSeed - 1 ).map( function(el) {
-				var o = Object.assign({}, el);
-
-				if ( weekSeed !== Math.floor((daySeed + 1) / 7) ) {
-					o.lastChance = true;
-				}
-				return o;
-			} );
-
-			let itemsThisFortnight    = shuffleSeed.shuffle( magic, fortnightSeed ).map( function(el) {
-				var o = Object.assign({}, el);
-
-				if ( fortnightSeed !== Math.floor((daySeed - 1) / 14) ) {
-					o.isNew = true;
-				}
-
-				if ( fortnightSeed !== Math.floor((daySeed + 1) / 14) ) {
-					o.lastChance = true;
-				}
-				return o;
-			} );
-
-			let dailyitems = [].concat(
-				itemsToday.filter( item => item.rarity === 'Common' ).slice(0,2),
-				itemsYesterday.filter( item => item.rarity === 'Common' ).slice(0,2),
-				itemsToday.filter( item => item.rarity === 'Uncommon' ).slice(0,1),
-				itemsYesterday.filter( item => item.rarity === 'Uncommon' ).slice(0,1),
-			);
-
-			let weeklyItems = [].concat(
-				itemsThisWeek.filter( item => item.rarity === 'Rare' ).slice(0,1),
-				itemsLastWeek.filter( item => item.rarity === 'Rare' ).slice(0,1)
-			);
-
-			let fortnightlyItems = itemsThisFortnight.filter( item => item.rarity === 'Very Rare' ).slice(0,1);
-
-			let forSale = [].concat(
-				dailyitems,
-				weeklyItems,
-				fortnightlyItems
-			).sort( fn.compareValues('avg') );
 
 			let playerString = `The items you can purchase correspond to your level.\n\n${process.env.COMMON} **Common**: any level\n${process.env.UNCOMMON} **Uncommon**: level 5 and above\n${process.env.RARE} **Rare**: level 9 and above\n${process.env.VERYRARE} **Very Rare**: level 12 and above\n\n`
 
@@ -184,6 +115,17 @@ module.exports = {
 
 			embed.addField('—', `\u200b\n:crossed_swords: **Items**\n\n${playerString}` );
 
+			/**
+			 * Get items for day
+			 */
+			let stockQty = require('../stockQty.json');
+
+			let allItems = fn.itemsForDay(magic, stockQty, new Date(new Date().toUTCString())).sort( fn.compareValues('avg') )
+
+			/**
+			 * Filter items for sale
+			 */
+			let forSale = allItems.filter( item => !("formula" in item) );
 
 			forSale.forEach( function(row) {
 
@@ -208,30 +150,9 @@ module.exports = {
 			} );
 
 			/**
-			 * Formulae
+			 * Filter formulae for sale
 			 */
-			let recipesThisWeek = itemsThisWeek.filter( item => item.rarity !== 'Common' ).slice(-3).map( function(el) {
-				var o = Object.assign({}, el);
-
-				if ( weekSeed !== Math.floor((daySeed - 1) / 7) ) {
-					o.isNew = true;
-				}
-				return o;
-			} );
-
-			let recipesLastWeek = itemsLastWeek.filter( item => item.rarity !== 'Common' ).slice(-3).map( function(el) {
-				var o = Object.assign({}, el);
-
-				if ( weekSeed !== Math.floor((daySeed + 1) / 7) ) {
-					o.lastChance = true;
-				}
-				return o;
-			} );
-
-			let recipes = [].concat(
-				recipesThisWeek,
-				recipesLastWeek
-			).sort( fn.compareValues('avg') );
+			let recipes = allItems.filter( item => item.formula );
 
 			embed.addField('—', '\u200b\n:scroll: **Formulae**\n\nFormulae can be purchased at any Level.');
 

@@ -169,6 +169,59 @@ module.exports = {
             "m": mins,
             "h": hrs
         };
+    },
+    newMap: ( arr, conditional, flag = '' ) => {
+
+        return arr.map( function(el) {
+            var o = Object.assign({}, el);
+
+            if ( conditional ) {
+                o[flag] = true;
+            }
+
+            return o;
+        } );
+
+    },
+    itemsForDay: (arr, args, dateObj) => {
+
+        require('dotenv').config();
+
+        const shuffleSeed = require('shuffle-seed');
+
+        let seed = Math.floor((dateObj - new Date(process.env.STARTDATE)) / (24 * 60 * 60 * 1000));
+
+        let items = [];
+
+        args.forEach( arg => {
+
+            Object.keys( arg.items ).forEach( key => {
+
+                items = items.concat( shuffleSeed.shuffle( arr, Math.floor( (seed + arg.offset) / arg.interval ) ).filter( item => item.rarity === key ).map( el => {
+
+                    var o = Object.assign({}, el);
+
+                    Object.keys( arg.timedFlags ).forEach( key => {
+
+                        if ( seed % arg.interval === arg.timedFlags[key] ) {
+                            o[key] = true;
+                        }
+
+                    } );
+
+                    if ( arg.flags ) {
+                        arg.flags.forEach( flag => o[flag] = true );
+                    }
+
+                    return o;
+
+                } ).slice( 0, arg.items[key] ) );
+
+            } );
+
+        } );
+
+        return items;
     }
 
 };
