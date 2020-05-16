@@ -1,7 +1,12 @@
 module.exports = {
 	name: 'order',
 	aliases: [
-		'order'
+		'order',
+		'when is in stock',
+		'when',
+		'order time',
+		'how long until you have',
+		'how long until you get'
 	],
 	description: 'This command works with the broker.',
 	execute(msg, args, embed) {
