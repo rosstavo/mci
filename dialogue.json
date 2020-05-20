@@ -1,8 +1,8 @@
 {
     "buy": [
-        "Yud like tae purchase the %s, ye? That'll be %s gould piece.",
-        "Nae problem. One %s, that'll be %s gould piece.",
-        "The %s? That's a fine choice, aye. %s gould piece please pal."
+        "Yud like tae purchase the %s, ye? That'll be %s gold piece.",
+        "Nae problem. One %s, that'll be %s gold piece.",
+        "The %s? That's a fine choice, aye. %s gold piece please pal."
     ],
     "error_generic": [
         "Sorry wean, ah’m no sure what yer askin.",

@@ -56,7 +56,7 @@ module.exports = {
 			let title = `:tools: **${row.item}**`;
 
 			if ( row.type === 'Gem' ) {
-				title = `:gem: **${row.item} [CR${row.cr}]**`;
+				title = `:gem: **${row.item} [CR${fn.fractionConverter(row.cr)}]**`;
 			}
 
 			let description = row.description;

@@ -60,7 +60,7 @@ module.exports = {
     },
     formatEmbed: (embed) => {
 
-        embed.setAuthor( 'Mineral Creek Initiative', 'https://toinen.world/imgs/mci.png', 'https://toinen.world/codex/the-mineral-creek-initiative/' )
+        embed.setAuthor('Mineral Creek Initiative', 'https://toinen.world/imgs/mci.png', 'https://toinen.world/codex/the-mineral-creek-initiative/')
             .setFooter('Once you’ve bought an item, add it to your D&D Beyond inventory as a Custom Item. Ask a @dm if you need any help.')
             .setColor(0xbcaaa4);
 
@@ -171,17 +171,17 @@ module.exports = {
             "h": hrs
         };
     },
-    newMap: ( arr, conditional, flag = '' ) => {
+    newMap: (arr, conditional, flag = '') => {
 
-        return arr.map( function(el) {
+        return arr.map(function(el) {
             var o = Object.assign({}, el);
 
-            if ( conditional ) {
+            if (conditional) {
                 o[flag] = true;
             }
 
             return o;
-        } );
+        });
 
     },
     itemsForDay: (arr, args, dateObj) => {
@@ -194,33 +194,33 @@ module.exports = {
 
         let items = [];
 
-        args.forEach( arg => {
+        args.forEach(arg => {
 
-            Object.keys( arg.items ).forEach( key => {
+            Object.keys(arg.items).forEach(key => {
 
-                items = items.concat( shuffleSeed.shuffle( arr, Math.floor( (seed + arg.offset) / arg.interval ) ).filter( item => item.rarity === key ).map( el => {
+                items = items.concat(shuffleSeed.shuffle(arr, Math.floor((seed + arg.offset) / arg.interval)).filter(item => item.rarity === key).map(el => {
 
                     var o = Object.assign({}, el);
 
-                    Object.keys( arg.timedFlags ).forEach( key => {
+                    Object.keys(arg.timedFlags).forEach(key => {
 
-                        if ( seed % arg.interval === arg.timedFlags[key] ) {
+                        if (seed % arg.interval === arg.timedFlags[key]) {
                             o[key] = true;
                         }
 
-                    } );
+                    });
 
-                    if ( arg.flags ) {
-                        arg.flags.forEach( flag => o[flag] = true );
+                    if (arg.flags) {
+                        arg.flags.forEach(flag => o[flag] = true);
                     }
 
                     return o;
 
-                } ).slice( 0, arg.items[key] ) );
+                }).slice(0, arg.items[key]));
 
-            } );
+            });
 
-        } );
+        });
 
         return items;
     },
@@ -228,19 +228,19 @@ module.exports = {
 
         let rel = (val - min) / (max - min);
 
-        if ( rel < 0.2 ) {
+        if (rel < 0.2) {
             return 'C';
         }
 
-        if ( rel < 0.4 ) {
+        if (rel < 0.4) {
             return 'B';
         }
 
-        if ( rel < 0.6 ) {
+        if (rel < 0.6) {
             return 'A';
         }
 
-        if ( rel < 0.8 ) {
+        if (rel < 0.8) {
             return 'A+';
         }
 
@@ -248,19 +248,19 @@ module.exports = {
     },
     getGemRarity: (val) => {
 
-        if ( val < 4 ) {
+        if (val < 4) {
             return 'Common';
         }
 
-        if ( val < 9 ) {
+        if (val < 9) {
             return 'Uncommon';
         }
 
-        if ( val < 13 ) {
+        if (val < 13) {
             return 'Rare';
         }
 
-        if ( val < 19 ) {
+        if (val < 19) {
             return 'Very Rare';
         }
 
@@ -270,7 +270,7 @@ module.exports = {
 
         let total = 0;
 
-        for ( let i = 0; i < qty; i++ ) {
+        for (let i = 0; i < qty; i++) {
             total = total + Math.floor(Math.random() * sides) + 1;
         }
 
@@ -278,26 +278,62 @@ module.exports = {
     },
     getCR: (value) => {
 
-        const cr = require( './cr.json' );
+        const cr = require('./cr.json');
 
-        const crs = Object.keys(cr);
+        const crs = Object.keys(cr).map(key => {
+            return parseFloat(key);
+        }).sort(function(a, b) {
+            return a - b;
+        });
 
         let lowestCR = false;
 
         let i = 0;
 
-        crs.forEach( key => {
+        crs.forEach(key => {
 
-            if ( cr[key] > value && ! lowestCR ) {
-                lowestCR = crs[i-1];
+            if (cr[key] > value && !lowestCR) {
+                lowestCR = crs[i - 1];
             }
 
             i++;
 
-        } );
+        });
 
         return lowestCR;
 
+    },
+    fractionConverter: (number) => {
+
+        if ( number >= 1 ) {
+            return number;
+        }
+
+        var fraction = number - Math.floor(number);
+        var precision = Math.pow(10, /\d*$/.exec(new String(number))[0].length);
+        var getGreatestCommonDivisor = function(fraction, precision) {
+            if (!precision)
+                return fraction;
+            return getGreatestCommonDivisor(precision, fraction % precision);
+        }
+        var greatestCommonDivisor = getGreatestCommonDivisor(Math.round(fraction * precision), precision);
+        var denominator = precision / getGreatestCommonDivisor(Math.round(fraction * precision), precision);
+        var numerator = Math.round(fraction * precision) / greatestCommonDivisor;
+
+        function reduce(numer, denom) {
+            for (var i = 2; i >= 9; i++) {
+                if ((numer % i === 0) && (denom % i) === 0) {
+                    numerator = numer / i;
+                    denominator = denom / i;
+                    reduce(numerator, denominator);
+                };
+            };
+        }
+
+        reduce(numerator, denominator);
+
+        return numerator + "/" + denominator;
     }
+
 
 };
