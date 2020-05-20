@@ -60,7 +60,8 @@ module.exports = {
     },
     formatEmbed: (embed) => {
 
-        embed.setFooter('To buy an item, add it to your inventory and subtract the gold amount.')
+        embed.setAuthor( 'Mineral Creek Initiative', 'https://toinen.world/imgs/mci.png', 'https://toinen.world/codex/the-mineral-creek-initiative/' )
+            .setFooter('Once you’ve bought an item, add it to your D&D Beyond inventory as a Custom Item. Ask a @dm if you need any help.')
             .setColor(0xbcaaa4);
 
         return embed;
@@ -222,6 +223,81 @@ module.exports = {
         } );
 
         return items;
+    },
+    getGemSize: (val, min, max) => {
+
+        let rel = (val - min) / (max - min);
+
+        if ( rel < 0.2 ) {
+            return 'C';
+        }
+
+        if ( rel < 0.4 ) {
+            return 'B';
+        }
+
+        if ( rel < 0.6 ) {
+            return 'A';
+        }
+
+        if ( rel < 0.8 ) {
+            return 'A+';
+        }
+
+        return 'S';
+    },
+    getGemRarity: (val) => {
+
+        if ( val < 4 ) {
+            return 'Common';
+        }
+
+        if ( val < 9 ) {
+            return 'Uncommon';
+        }
+
+        if ( val < 13 ) {
+            return 'Rare';
+        }
+
+        if ( val < 19 ) {
+            return 'Very Rare';
+        }
+
+        return 'Legendary';
+    },
+    rollDice: (qty, sides) => {
+
+        let total = 0;
+
+        for ( let i = 0; i < qty; i++ ) {
+            total = total + Math.floor(Math.random() * sides) + 1;
+        }
+
+        return total;
+    },
+    getCR: (value) => {
+
+        const cr = require( './cr.json' );
+
+        const crs = Object.keys(cr);
+
+        let lowestCR = false;
+
+        let i = 0;
+
+        crs.forEach( key => {
+
+            if ( cr[key] > value && ! lowestCR ) {
+                lowestCR = crs[i-1];
+            }
+
+            i++;
+
+        } );
+
+        return lowestCR;
+
     }
 
 };

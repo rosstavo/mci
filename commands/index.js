@@ -1,6 +1,5 @@
 module.exports = {
-    Stock    : require('./broker'),
-    Appraise : require('./appraise'),
+    Stock    : require('./mci'),
     Help     : require('./help'),
-    Order    : require('./order'),
+    Buy      : require('./buy')
 };
