@@ -85,9 +85,27 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
+    let commandName = false;
+
+    if (!commandName && message.channel.id !== process.env.MCI && message.channel.type === 'text') {
+        return;
+    }
+
+    if (!commandName && !message.mentions.users.has(bot.user.id) && message.channel.type === 'text') {
+        return;
+    }
+
     if (message.author.id === bot.user.id) {
         return;
     }
+
+    let npc = 'Quinten Xhalore';
+
+    if ( today.getHours() > 12 ) {
+        npc = 'Helen Stoneriver';
+    }
+
+    message.channel.send( `${npc} is manning the desk.` );
 
     async function stockCheck() {
 
@@ -185,15 +203,7 @@ bot.on('message', message => {
 
         }
 
-        let commandName = false;
 
-        if (!commandName && message.channel.id !== process.env.MCI && message.channel.type === 'text') {
-            return;
-        }
-
-        if (!commandName && !message.mentions.users.has(bot.user.id) && message.channel.type === 'text') {
-            return;
-        }
 
         let args = message.content.split(/ +/);
 
