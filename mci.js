@@ -105,7 +105,7 @@ bot.on('message', message => {
         npc = 'Helen Stoneriver';
     }
 
-    message.channel.send( `${npc} is manning the desk.` );
+    message.channel.send( `${npc} is behind the desk.` );
 
     async function stockCheck() {
 
