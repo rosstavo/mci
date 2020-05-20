@@ -104,7 +104,7 @@ module.exports = {
 
 		embed.addField('—', `\u200b\n:tools: **Crafting Costs**\n\nAdventurers looking for crafting services need to provide a gem containing a creature essence.\n\n${craftingCostsString}`, true );
 
-		embed.addField('—', `\u200b\n:hourglass_flowing_sand: **Crafting Times**\n\nThe rarity of the resulting item depends on the CR of the essence used in crafting.\n\n${process.env.COMMON} \`Common\` – 1 week\n${process.env.UNCOMMON} \`Uncommon\` – 2 weeks\n${process.env.RARE} \`Rare\` – 5 weeks\n${process.env.VERYRARE} \`Very Rare\` – 10 weeks\n${process.env.LEGENDARY} \`Legendary\` – 20 weeks`, true );
+		embed.addField('—', `\u200b\n:hourglass_flowing_sand: **Crafting Times**\n\nThe rarity of the resulting item depends on the CR of the essence used in crafting.\n\n${process.env.COMMON} \`Common\` – 1 week – CR 0–3\n${process.env.UNCOMMON} \`Uncommon\` – 2 weeks – CR 4–8\n${process.env.RARE} \`Rare\` – 5 weeks – CR 9–12\n${process.env.VERYRARE} \`Very Rare\` – 10 weeks – CR 13–18\n${process.env.LEGENDARY} \`Legendary\` – 20 weeks – CR 19+`, true );
 
 		/**
 		 * Reply to message and load player details
