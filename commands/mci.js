@@ -18,6 +18,7 @@ module.exports = {
 		const shuffleSeed = require('shuffle-seed');
 		const Papa 		  = require('papaparse');
 		const months	  = require('../months.json');
+		var numberToWords = require('number-to-words');
 
 		let stock = JSON.parse( fs.readFileSync('./stock.json') );
 
@@ -61,7 +62,7 @@ module.exports = {
 			let description = row.description;
 
 			if ( row.type === 'Gem' ) {
-				description = `${row.size} grade gem. ${description}`;
+				description = `${description}. ${row.size} grade specimen.`;
 			}
 
 			/**
@@ -75,7 +76,7 @@ module.exports = {
 
 			let meta = `\n${description}\n—\n${emoji} \`${row.rarity}\`\n${process.env.COIN} \`${fn.numberWithCommas(row.price)} gp\`\n${stock}\n\u200b`;
 
-			embed.addField( '`' + i + '`', title + meta, true );
+			embed.addField( `\`${i}\``, title + meta, true );
 
 			i++;
 

@@ -85,10 +85,15 @@ bot.on('ready', () => {
  */
 bot.on('message', message => {
 
+    if (message.author.id === bot.user.id) {
+        return;
+    }
 
     async function stockCheck() {
 
         if (typeof stock.date === 'undefined' || stock.date !== date) {
+            message.reply( fn.formatDialogue( fn.arrayRand( dialogue.loading ) ) );
+
             return await fn.getScript('https://docs.google.com/spreadsheets/d/e/2PACX-1vTYQa-Tc32vE1mN1V26HiTN8xyJzzczgzXcykynyuqQahqLqgCyGn-7IwwmgBto9JE7MTRH0ETP7OmX/pub?gid=1177386660&single=true&output=csv');
         }
 
@@ -100,8 +105,6 @@ bot.on('message', message => {
     stockCheck().then( csv => {
 
         if ( csv ) {
-
-            message.reply( fn.formatDialogue( fn.arrayRand( dialogue.loading ) ) );
 
             /**
              * Parse player spreadsheet
@@ -116,18 +119,20 @@ bot.on('message', message => {
 
             let gems = shuffleSeed.shuffle(data.data, seed).slice(0, 6);
 
-            for (let i in gems) {
+            for (let i = 0; i < 6; i++ ) {
 
-                let price = fn.rollDice(gems[i].diceqty, gems[i].die) * gems[i].multiplier;
+                let gems = shuffleSeed.shuffle(data.data, seed + `-${i}`);
+
+                let price = fn.rollDice(gems[0].diceqty, gems[0].die) * gems[0].multiplier;
 
                 let cr = fn.getCR(price)
 
                 newStock.push({
-                    "item"       : gems[i].item,
-                    "description": gems[i].description,
+                    "item"       : gems[0].item,
+                    "description": gems[0].description,
                     "rarity"     : fn.getGemRarity(cr),
                     "price"      : price,
-                    "size"       : fn.getGemSize(price, gems[i].diceqty * gems[i].multiplier, gems[i].diceqty * gems[i].die * gems[i].multiplier),
+                    "size"       : fn.getGemSize(price, gems[0].diceqty * gems[0].multiplier, gems[0].diceqty * gems[0].die * gems[0].multiplier),
                     "cr"         : cr,
                     "qty"        : 1,
                     "type"       : "Gem"
@@ -156,7 +161,7 @@ bot.on('message', message => {
             for (let i in formulae) {
 
                 newStock.push({
-                    "item"       : 'Crafting Formula:\n' + formulae[i].item,
+                    "item"       : 'Crafting Formula: ' + formulae[i].item,
                     "description": 'Multiple use',
                     "rarity"     : formulae[i].rarity,
                     "price"      : 200,
@@ -187,10 +192,6 @@ bot.on('message', message => {
         }
 
         if (!commandName && !message.mentions.users.has(bot.user.id) && message.channel.type === 'text') {
-            return;
-        }
-
-        if (message.author.id === bot.user.id) {
             return;
         }
 

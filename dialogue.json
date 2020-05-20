@@ -1,29 +1,41 @@
 {
     "buy": [
-        "Yud like tae purchase the %s, ye? That'll be %s gould piece."
+        "Yud like tae purchase the %s, ye? That'll be %s gould piece.",
+        "Nae problem. One %s, that'll be %s gould piece.",
+        "The %s? That's a fine choice, aye. %s gould piece please pal."
     ],
     "error_generic": [
-        "Sorry wean, ah’m no sure what yer askin."
+        "Sorry wean, ah’m no sure what yer askin.",
+        "Ah didnae catch that, sorry pal. Could ye try speakin a wee bit clearer?",
+        "Can ye talk mair slow?",
+        "Dae ye talk Common? Ah cannae unnerstaun ye."
     ],
     "help_generic": [
-        "Haw pal. Try askin me `What's in stock?`. Make sure tae say ma name (@Prospector) so ah'know yer talking tae me."
+        "Haw pal. Try askin me `What's in stock?`. Make sure tae say ma name (@Prospector) so ah'know yer talking tae me.",
+        "Hoo's it gaun? Ye can always ask me `What's in stock?`. Tag ma name (@Prospector) ailse ah may not hear ye.",
+        "A'right neeb? Ye can start by askin me 'What's in stock?'. Dinnae forget tae say ma name (@Prospector) so ah ken it's me yer talkin tae."
     ],
     "help_flavour": [
         "If you've got a thick accent yer'll have tae speak up."
     ],
     "items_in_stock": [
-        "Here’s what ah've for sale this week."
+        "Here’s what ah've for sale this week.",
+        "Ah've got aw these fine items in stock the noo."
     ],
     "loading": [
-        "Haud yer hoarse…"
+        "Haud yer hoarse…",
+        "Gie's a sec, ah'll be right wi' ye..."
     ],
     "stock_left": [
-        "Ah've %s of these left."
+        "Ah've %s of these left.",
+        "Ah've just got %s mair of these."
     ],
     "stock_last_one": [
         "That was my last one! Aw sould oot now."
     ],
     "stock_sold_out": [
-        "Sorry wee bairn, sould oot of those earlier."
+        "Sorry wee bairn, sould oot of those earlier.",
+        "Cannae dae that chum, aw sould oot. Sorry.",
+        "Dinnae hae ony mair of those, sorry frien. Just sould out."
     ]
 }
