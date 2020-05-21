@@ -98,7 +98,7 @@ module.exports = {
 
                 }
 
-                // stock.date = date;
+                stock.date = date;
 
                 // Store stock
                 try {
