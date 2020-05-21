@@ -106,7 +106,7 @@ module.exports = {
                         if (err) throw err;
                     });
 
-                    msg.edit( '`Stock refreshed.`' );
+                    msg.edit( msg.content + ' `Stock refreshed.`' );
                 } catch (error) {
                     console.error(error);
                 }
