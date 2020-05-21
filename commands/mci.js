@@ -12,15 +12,18 @@ module.exports = {
 	description: 'This command works with the broker.',
 	execute(msg, args, embed) {
 
-		const Fuse        = require('fuse.js');
-		const fn   		  = require('../functions.js');
-		const fs   		  = require('fs');
-		const shuffleSeed = require('shuffle-seed');
-		const Papa 		  = require('papaparse');
-		const months	  = require('../data/months.json');
-		var numberToWords = require('number-to-words');
+		const Fuse          = require('fuse.js');
+		const fn   		    = require('../functions.js');
+		const fs   		    = require('fs');
+		const shuffleSeed   = require('shuffle-seed');
+		const Papa 		    = require('papaparse');
+		const numberToWords = require('number-to-words');
 
-		let stock = JSON.parse( fs.readFileSync('./data/stock.json') );
+		/**
+		 * Get our data
+		 */
+		const months = require('../data/months.json');
+		let stock    = JSON.parse( fs.readFileSync('./data/stock.json') );
 
 		/**
 		 * Import dialogue

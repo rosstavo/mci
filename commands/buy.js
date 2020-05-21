@@ -2,7 +2,11 @@ module.exports = {
 	name: 'buy',
 	aliases: [
 		'buy',
-		'purchase'
+		'purchase',
+		'I would like to buy',
+		'I would like to purchase',
+		'please may I buy',
+		'please may I purchase'
 	],
 	description: 'This command works with the broker.',
 	execute(msg, args, embed) {

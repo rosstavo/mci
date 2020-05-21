@@ -2,6 +2,8 @@ module.exports = {
 	name: 'help',
 	aliases: [
 		'help',
+		'help me',
+		'I need help'
 	],
 	description: 'This command works with the broker.',
 	execute(msg, args, embed) {

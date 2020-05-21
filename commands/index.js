@@ -3,4 +3,5 @@ module.exports = {
     Help     : require('./help'),
     Buy      : require('./buy'),
     Restock  : require('./restock'),
+    List     : require('./list'),
 };

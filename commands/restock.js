@@ -1,10 +1,10 @@
 module.exports = {
-	name: 'restock',
-	aliases: [
-		'restock',
-	],
-	description: 'This command works with the broker.',
-	execute(msg, args, embed) {
+    name: 'restock',
+    aliases: [
+        'restock',
+    ],
+    description: 'This command works with the broker.',
+    execute(msg, args, embed) {
 
         /**
          * We're using this command asynchronously, so we need to wrap it all in
@@ -13,11 +13,11 @@ module.exports = {
          */
         return new Promise((resolve, reject) => {
 
-            const fn          = require('../functions.js');
-            const Fuse        = require('fuse.js');
-            const fs          = require('fs');
+            const fn = require('../functions.js');
+            const Fuse = require('fuse.js');
+            const fs = require('fs');
             const shuffleSeed = require('shuffle-seed');
-            const Papa        = require('papaparse');
+            const Papa = require('papaparse');
 
             /**
              * Get the dialogue
@@ -38,7 +38,7 @@ module.exports = {
             /**
              * Reply with loading message, then do all the restocking work
              */
-            msg.reply( fn.formatDialogue( fn.arrayRand( dialogue.loading ) ) ).then( msg => ( async (url) => {
+            msg.reply(fn.formatDialogue(fn.arrayRand(dialogue.loading))).then(msg => (async (url) => {
 
                 /**
                  * Get the Google Sheet
@@ -49,7 +49,7 @@ module.exports = {
                  * If we can't find it, something's gone really wrong, so let's
                  * just throw an error.
                  */
-                if ( ! csv ) {
+                if (!csv) {
                     throw new Error('Can’t find the CSV.');
                 }
 
@@ -78,7 +78,7 @@ module.exports = {
                 /**
                  * Loop through and shuffle
                  */
-                for (let i = 0; i < 6; i++ ) {
+                for (let i = 0; i < 6; i++) {
 
                     /**
                      * Shuffle using a unique seed for day + index
@@ -88,9 +88,9 @@ module.exports = {
                     /**
                      * Roll the dice and get our price
                      */
-                    let price = await fn.rollDice(gems[0].diceqty, gems[0].die).then( res => {
+                    let price = await fn.rollDice(gems[0].diceqty, gems[0].die).then(res => {
                         return res * gems[0].multiplier;
-                    } );
+                    });
 
                     /**
                      * Get the CR for the gem
@@ -101,14 +101,14 @@ module.exports = {
                      * Add it to our new stock
                      */
                     newStock.push({
-                        "item"       : gems[0].item,
+                        "item": gems[0].item,
                         "description": gems[0].description,
-                        "rarity"     : fn.getGemRarity(cr),
-                        "price"      : price,
-                        "size"       : fn.getGemSize(price, gems[0].diceqty * gems[0].multiplier, gems[0].diceqty * gems[0].die * gems[0].multiplier),
-                        "cr"         : cr,
-                        "qty"        : 1,
-                        "type"       : "Gem"
+                        "rarity": fn.getGemRarity(cr),
+                        "price": price,
+                        "size": fn.getGemSize(price, gems[0].diceqty * gems[0].multiplier, gems[0].diceqty * gems[0].die * gems[0].multiplier),
+                        "cr": cr,
+                        "qty": 1,
+                        "type": "Gem"
                     });
 
                 }
@@ -126,7 +126,7 @@ module.exports = {
                 /**
                  * Shuffle them using our day seed
                  */
-                let formulae = shuffleSeed.shuffle(magic, seed).filter( item => ! item.exclude ).slice(0, 3);
+                let formulae = shuffleSeed.shuffle(magic, seed).filter(item => !item.exclude).slice(0, 3);
 
                 /**
                  * Add the formulae to our new stock
@@ -134,13 +134,13 @@ module.exports = {
                 for (let i in formulae) {
 
                     newStock.push({
-                        "item"       : 'Crafting Formula: ' + formulae[i].item,
+                        "item": 'Crafting Formula: ' + formulae[i].item,
                         "description": 'Multiple use',
-                        "rarity"     : formulae[i].rarity,
-                        "price"      : 200,
-                        "value"      : formulae[i].avg,
-                        "qty"        : 1,
-                        "type"       : "Formula"
+                        "rarity": formulae[i].rarity,
+                        "price": 200,
+                        "value": formulae[i].avg,
+                        "qty": 1,
+                        "type": "Formula"
                     });
 
                 }
@@ -162,7 +162,7 @@ module.exports = {
                     /**
                      * Add a note that the stock's been refreshed
                      */
-                    msg.edit( msg.content + ' `Stock refreshed.`' );
+                    msg.edit(msg.content + ' A new stock list is available.');
 
                 } catch (error) {
 
@@ -176,10 +176,10 @@ module.exports = {
                  */
                 resolve(true);
 
-            } )(process.env.GEMS) );
+            })(process.env.GEMS));
 
-        } );
+        });
 
 
-	},
+    },
 };
