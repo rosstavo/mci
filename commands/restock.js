@@ -6,6 +6,11 @@ module.exports = {
 	description: 'This command works with the broker.',
 	execute(msg, args, embed) {
 
+        /**
+         * We're using this command asynchronously, so we need to wrap it all in
+         * a promise. At least, I think we need to. I haven't done a lot of work
+         * with async functions before.
+         */
         return new Promise((resolve, reject) => {
 
             const fn          = require('../functions.js');
@@ -14,17 +19,36 @@ module.exports = {
             const shuffleSeed = require('shuffle-seed');
             const Papa        = require('papaparse');
 
+            /**
+             * Get the dialogue
+             */
             const dialogue = require('../dialogue.json');
 
+            /**
+             * What time/date is it
+             */
             let today = new Date(new Date().toUTCString());
             let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
+            /**
+             * Get the current stock
+             */
             let stock = JSON.parse(fs.readFileSync('./stock.json'));
 
+            /**
+             * Reply with loading message, then do all the restocking work
+             */
             msg.reply( fn.formatDialogue( fn.arrayRand( dialogue.loading ) ) ).then( msg => ( async (url) => {
 
+                /**
+                 * Get the Google Sheet
+                 */
                 let csv = await fn.getScript(url);
 
+                /**
+                 * If we can't find it, something's gone really wrong, so let's
+                 * just throw an error.
+                 */
                 if ( ! csv ) {
                     throw new Error('Can’t find the CSV.');
                 }
@@ -36,23 +60,46 @@ module.exports = {
                     "header": true
                 });
 
+                /**
+                 * Let's pick up some new stock
+                 */
                 let newStock = [];
 
+                /**
+                 * Create a unique seed for the day
+                 */
                 let seed = Math.floor((today - new Date(process.env.STARTDATE)) / (24 * 60 * 60 * 1000));
 
+                /**
+                 * Do a first shuffle, for good luck (not really necessary)
+                 */
                 let gems = shuffleSeed.shuffle(data.data, seed).slice(0, 6);
 
+                /**
+                 * Loop through and shuffle
+                 */
                 for (let i = 0; i < 6; i++ ) {
 
+                    /**
+                     * Shuffle using a unique seed for day + index
+                     */
                     let gems = await shuffleSeed.shuffle(data.data, seed + `-${i}`);
 
+                    /**
+                     * Roll the dice and get our price
+                     */
                     let price = await fn.rollDice(gems[0].diceqty, gems[0].die).then( res => {
                         return res * gems[0].multiplier;
                     } );
 
-
+                    /**
+                     * Get the CR for the gem
+                     */
                     let cr = fn.getCR(price)
 
+                    /**
+                     * Add it to our new stock
+                     */
                     newStock.push({
                         "item"       : gems[0].item,
                         "description": gems[0].description,
@@ -66,24 +113,24 @@ module.exports = {
 
                 }
 
+                /**
+                 * Sort by price
+                 */
                 stock.items = newStock.sort(fn.compareValues('price'));
 
+                /**
+                 * Let's get our magic items
+                 */
                 let magic = require('../magic.json');
 
-                let formulae = shuffleSeed.shuffle(magic, seed).filter( item => {
+                /**
+                 * Shuffle them using our day seed
+                 */
+                let formulae = shuffleSeed.shuffle(magic, seed).filter( item => ! item.exclude ).slice(0, 3);
 
-                    if ( item['Type'] === 'Spell Scrolls' ) {
-                        return false;
-                    }
-
-                    if ( item['exclude'] ) {
-                        return false;
-                    }
-
-                    return true;
-
-                } ).slice(0, 3);
-
+                /**
+                 * Add the formulae to our new stock
+                 */
                 for (let i in formulae) {
 
                     newStock.push({
@@ -98,22 +145,38 @@ module.exports = {
 
                 }
 
+                /**
+                 * And add a date to the stock
+                 */
                 stock.date = date;
 
-                // Store stock
                 try {
+
+                    /**
+                     * Store the stock
+                     */
                     fs.writeFileSync('stock.json', JSON.stringify(stock), 'utf-8', function(err) {
                         if (err) throw err;
                     });
 
+                    /**
+                     * Add a note that the stock's been refreshed
+                     */
                     msg.edit( msg.content + ' `Stock refreshed.`' );
+
                 } catch (error) {
+
                     console.error(error);
+
+                    reject(true);
                 }
 
+                /**
+                 * Resolve the promise
+                 */
                 resolve(true);
 
-            } )('https://docs.google.com/spreadsheets/d/e/2PACX-1vTYQa-Tc32vE1mN1V26HiTN8xyJzzczgzXcykynyuqQahqLqgCyGn-7IwwmgBto9JE7MTRH0ETP7OmX/pub?gid=1177386660&single=true&output=csv') );
+            } )(process.env.GEMS) );
 
         } );
 
