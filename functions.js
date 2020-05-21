@@ -268,13 +268,18 @@ module.exports = {
     },
     rollDice: (qty, sides) => {
 
-        let total = 0;
+        return new Promise((resolve, reject) => {
 
-        for (let i = 0; i < qty; i++) {
-            total = total + Math.floor(Math.random() * sides) + 1;
-        }
+            let total = 0;
 
-        return total;
+            for (let i = 0; i < qty; i++) {
+                total = total + Math.floor(Math.random() * sides) + 1;
+            }
+
+            resolve(total);
+
+        });
+
     },
     getCR: (value) => {
 
