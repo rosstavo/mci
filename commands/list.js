@@ -79,7 +79,7 @@ module.exports = {
 
                 embed.setTitle( 'Standard Gem Valuations' );
 
-                embed.setDescription( 'The list below shows a complete list of gems discovered on the Loamy Cape, and a valuation for an average specimen.' );
+                embed.setDescription( 'The list below shows a complete list of gems discovered on the Loamy Cape, and a valuation for an A grade specimen.' );
 
                 embed.addField( '—', '* This gem is a named spell component.' );
 
