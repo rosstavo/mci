@@ -19,7 +19,7 @@ module.exports = {
 		/**
 		 * Get dialogue
 		 */
-		const dialogue = require('../dialogue.json');
+		const dialogue = require('../data/dialogue.json');
 
 		/**
 		 * What's our message content?
@@ -44,7 +44,7 @@ module.exports = {
 		/**
 		 * Get the stock
 		 */
-		let stock = JSON.parse( fs.readFileSync('stock.json') );
+		let stock = JSON.parse( fs.readFileSync('./data/stock.json') );
 
 		/**
 		 * Double check that the current date matches the stock
@@ -81,7 +81,7 @@ module.exports = {
 		/**
 		 * Store the new stock value, and message the customer
 		 */
-		fs.writeFile( 'stock.json', JSON.stringify(stock), 'utf-8', function (err) {
+		fs.writeFile( './data/stock.json', JSON.stringify(stock), 'utf-8', function (err) {
 			if (err) throw err;
 
 			msg.reply( fn.formatDialogue( fn.arrayRand( dialogue.buy ) + ' ' + stockDialogue, [stock.items[index-1].item, stock.items[index-1].price, stock.items[index-1].qty] ) );

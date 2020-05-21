@@ -133,7 +133,7 @@ module.exports = {
     },
     getCR: (value) => {
 
-        const cr = require('./cr.json');
+        const cr = require('./data/cr.json');
 
         const crs = Object.keys(cr).map(key => {
             return parseFloat(key);

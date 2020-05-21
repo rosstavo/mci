@@ -7,7 +7,7 @@ module.exports = {
 	execute(msg, args, embed) {
 
 		const fn   	   = require('../functions.js');
-		const dialogue = require('../dialogue.json');
+		const dialogue = require('../data/dialogue.json');
 
 		/**
 		 * Send our help message

@@ -17,15 +17,15 @@ module.exports = {
 		const fs   		  = require('fs');
 		const shuffleSeed = require('shuffle-seed');
 		const Papa 		  = require('papaparse');
-		const months	  = require('../months.json');
+		const months	  = require('../data/months.json');
 		var numberToWords = require('number-to-words');
 
-		let stock = JSON.parse( fs.readFileSync('./stock.json') );
+		let stock = JSON.parse( fs.readFileSync('./data/stock.json') );
 
 		/**
 		 * Import dialogue
 		 */
-		let dialogue = require('../dialogue.json');
+		let dialogue = require('../data/dialogue.json');
 
 		/**
 		 * Format the embed in advance
@@ -96,7 +96,7 @@ module.exports = {
 		/**
 		 * Get the crafting costs and format a field
 		 */
-		const craftingCosts = require('../craftingCosts.json');
+		const craftingCosts = require('../data/craftingCosts.json');
 
 		let craftingCostsString = '';
 

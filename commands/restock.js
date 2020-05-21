@@ -22,7 +22,7 @@ module.exports = {
             /**
              * Get the dialogue
              */
-            const dialogue = require('../dialogue.json');
+            const dialogue = require('../data/dialogue.json');
 
             /**
              * What time/date is it
@@ -33,7 +33,7 @@ module.exports = {
             /**
              * Get the current stock
              */
-            let stock = JSON.parse(fs.readFileSync('./stock.json'));
+            let stock = JSON.parse(fs.readFileSync('./data/stock.json'));
 
             /**
              * Reply with loading message, then do all the restocking work
@@ -121,7 +121,7 @@ module.exports = {
                 /**
                  * Let's get our magic items
                  */
-                let magic = require('../magic.json');
+                let magic = require('../data/magic.json');
 
                 /**
                  * Shuffle them using our day seed
@@ -155,7 +155,7 @@ module.exports = {
                     /**
                      * Store the stock
                      */
-                    fs.writeFileSync('stock.json', JSON.stringify(stock), 'utf-8', function(err) {
+                    fs.writeFileSync('./data/stock.json', JSON.stringify(stock), 'utf-8', function(err) {
                         if (err) throw err;
                     });
 

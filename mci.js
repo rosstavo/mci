@@ -10,7 +10,7 @@ const fsPromises = fs.promises;
 const shuffleSeed = require('shuffle-seed');
 const Papa = require('papaparse');
 
-const dialogue = require('./dialogue.json');
+const dialogue = require('./data/dialogue.json');
 
 /**
  * Set up the client
@@ -140,7 +140,7 @@ bot.on('message', async message => {
     /**
      * Get our stock values
      */
-    let stock = await JSON.parse(fs.readFileSync('./stock.json'));
+    let stock = await JSON.parse(fs.readFileSync('./data/stock.json'));
 
     /**
      * If the stock date isn't today, we need new stock. This only fires if
