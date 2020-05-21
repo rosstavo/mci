@@ -73,8 +73,6 @@ module.exports = {
                     fields.push(gemsList.splice(0, 20));
                 }
 
-                console.log( fields );
-
                 for (let field of fields) {
                     embed.addField('—', field.join('\n\n'), true);
                 }
