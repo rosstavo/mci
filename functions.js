@@ -1,21 +1,4 @@
 module.exports = {
-    discordFormatEmbed: (content, embed) => {
-
-        const TurndownService = require('turndown');
-        const truncate = require('truncate-html');
-
-        // Convert content to Markdown
-        var turndownService = new TurndownService();
-
-        var truncatedHTML = truncate(content, 1024, {
-            ellipsis: '... [Content clipped]'
-        });
-
-        var markdown = turndownService.turndown(truncatedHTML);
-
-        return embed.setDescription(markdown);
-
-    },
     getScript: (url) => {
         return new Promise((resolve, reject) => {
             const http = require('http'),
@@ -45,19 +28,6 @@ module.exports = {
             });
         });
     },
-    groupBy: (list, keyGetter) => {
-        const map = new Map();
-        list.forEach((item) => {
-            const key = keyGetter(item);
-            const collection = map.get(key);
-            if (!collection) {
-                map.set(key, [item]);
-            } else {
-                collection.push(item);
-            }
-        });
-        return map;
-    },
     formatEmbed: (embed) => {
 
         embed.setAuthor('Mineral Creek Initiative', 'https://toinen.world/imgs/mci.png', 'https://toinen.world/codex/the-mineral-creek-initiative/')
@@ -66,54 +36,8 @@ module.exports = {
 
         return embed;
     },
-    daysBetween: (d1, d2) => {
-        return Math.floor((d2 - d1) / (24 * 60 * 60 * 1000));
-    },
-    weeksBetween: (d1, d2) => {
-        return Math.floor((d2 - d1) / (7 * 24 * 60 * 60 * 1000));
-    },
-    shuffle: (array, rand, callback) => {
-
-        var m = array.length,
-            t, i;
-
-        // While there remain elements to shuffle…
-        while (m) {
-
-            // Pick a remaining element…
-            i = Math.floor(rand * m--); // <-- MODIFIED LINE
-
-            // And swap it with the current element.
-            t = array[m];
-            array[m] = array[i];
-            array[i] = t;
-            ++rand // <-- ADDED LINE
-        }
-
-        return array;
-    },
-    random: (seed) => {
-        var x = Math.sin(seed++) * 10000;
-        return x - Math.floor(x);
-    },
     arrayRand: (arr) => {
         return arr[Math.floor(Math.random() * arr.length)];
-    },
-    canBuy: (level) => {
-
-        if (level > 11) {
-            return 'Very Rare';
-        }
-
-        if (level > 8) {
-            return 'Rare';
-        }
-
-        if (level > 4) {
-            return 'Uncommon';
-        }
-
-        return 'Common';
     },
     formatDialogue: (str, words = false) => {
         const vsprintf = require('sprintf-js').vsprintf;
@@ -149,80 +73,6 @@ module.exports = {
     },
     numberWithCommas: (x) => {
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-    },
-    isToday: (someDate) => {
-        const today = new Date()
-        return someDate.getDate() == today.getDate() &&
-            someDate.getMonth() == today.getMonth() &&
-            someDate.getFullYear() == today.getFullYear();
-    },
-    msToTime: (s) => {
-        var ms = s % 1000;
-        s = (s - ms) / 1000;
-        var secs = s % 60;
-        s = (s - secs) / 60;
-        var mins = s % 60;
-        var hrs = (s - mins) / 60;
-
-        return {
-            "ms": ms,
-            "s": secs,
-            "m": mins,
-            "h": hrs
-        };
-    },
-    newMap: (arr, conditional, flag = '') => {
-
-        return arr.map(function(el) {
-            var o = Object.assign({}, el);
-
-            if (conditional) {
-                o[flag] = true;
-            }
-
-            return o;
-        });
-
-    },
-    itemsForDay: (arr, args, dateObj) => {
-
-        require('dotenv').config();
-
-        const shuffleSeed = require('shuffle-seed');
-
-        let seed = Math.floor((dateObj - new Date(process.env.STARTDATE)) / (24 * 60 * 60 * 1000));
-
-        let items = [];
-
-        args.forEach(arg => {
-
-            Object.keys(arg.items).forEach(key => {
-
-                items = items.concat(shuffleSeed.shuffle(arr, Math.floor((seed + arg.offset) / arg.interval)).filter(item => item.rarity === key).map(el => {
-
-                    var o = Object.assign({}, el);
-
-                    Object.keys(arg.timedFlags).forEach(key => {
-
-                        if (seed % arg.interval === arg.timedFlags[key]) {
-                            o[key] = true;
-                        }
-
-                    });
-
-                    if (arg.flags) {
-                        arg.flags.forEach(flag => o[flag] = true);
-                    }
-
-                    return o;
-
-                }).slice(0, arg.items[key]));
-
-            });
-
-        });
-
-        return items;
     },
     getGemSize: (val, min, max) => {
 
