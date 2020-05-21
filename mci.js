@@ -12,9 +12,6 @@ const Papa = require('papaparse');
 
 const dialogue = require('./dialogue.json');
 
-let today = new Date(new Date().toUTCString());
-let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
 /**
  * Set up the client
  */
@@ -84,6 +81,9 @@ bot.on('ready', () => {
  * On a new message, perform a command if it exists
  */
 bot.on('message', message => {
+
+    let today = new Date(new Date().toUTCString());
+    let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     let commandName = false;
 
