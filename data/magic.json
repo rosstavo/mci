@@ -11356,7 +11356,7 @@
         "Multiplier": 1,
         "Dice Qty": 4,
         "Standard Dev": 3.4,
-        "exclude": false
+        "exclude": true
     },
     {
         "item": "Spell Scroll (Level 2)",
@@ -11376,7 +11376,7 @@
         "Multiplier": 5,
         "Dice Qty": 4,
         "Standard Dev": 4.6,
-        "exclude": false
+        "exclude": true
     },
     {
         "item": "Spell Scroll (Level 3)",

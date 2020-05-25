@@ -71,6 +71,10 @@ module.exports = {
 				description = `${description}. ${row.size} grade specimen.`;
 			}
 
+			if ( row.type === 'Formula' ) {
+				description = `${description}. Fill in a [commission request](https://toinen.world/commissions/) if you buy this formula.`;
+			}
+
 			/**
 			 * Rarity emoji
 			 */
@@ -107,7 +111,7 @@ module.exports = {
 			craftingCostsString += `${item} – ${process.env.COIN} \`${fn.numberWithCommas(craftingCosts[item])} gp\`\n`;
 		} );
 
-		embed.addField('—', `\u200b\n:tools: **Crafting Costs**\n\nAdventurers looking for crafting services need to provide a gem containing a creature essence.\n\n${craftingCostsString}`, true );
+		embed.addField('—', `\u200b\n:tools: **Crafting Costs**\n\nAdventurers looking for crafting services need to provide a gem containing a creature essence.\n\n${craftingCostsString}\nFill in a [commission request](https://toinen.world/commissions/) to notify a DM if you'd like to have an item commissioned.`, true );
 
 		/**
 		 * Format a field for crafting times
