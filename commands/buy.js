@@ -92,6 +92,24 @@ module.exports = {
 		} );
 
 		/**
+		 * Get the log
+		 */
+		let log = JSON.parse( fs.readFileSync('./data/log.json') );
+
+		let item = stock.items[index-1];
+
+		item.date = today;
+
+		log.push(item);
+
+		/**
+		 * Store the new stock value, and message the customer
+		 */
+		fs.writeFile( './data/log.json', JSON.stringify(log), 'utf-8', function (err) {
+			if (err) throw err;
+		} );
+
+		/**
 		 * Probably not necessary
 		 */
         return true;
