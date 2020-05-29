@@ -111,12 +111,12 @@ module.exports = {
 			craftingCostsString += `${item} – ${process.env.COIN} \`${fn.numberWithCommas(craftingCosts[item])} gp\`\n`;
 		} );
 
-		embed.addField('—', `\u200b\n:tools: **Crafting Costs**\n\nAdventurers looking for crafting services need to provide a gem containing a creature essence.\n\n${craftingCostsString}\nFill in a [commission request](https://toinen.world/commissions/) to notify a DM if you'd like to have an item commissioned.`, true );
+		embed.addField('—', `\u200b\n:tools: **Crafting Costs**\n\nAdventurers looking for crafting services need to provide a gem containing a creature essence.\n\n${craftingCostsString}\n* Mundane base item not included in cost. Find additional costs [here](https://www.dndbeyond.com/equipment).`, true );
 
 		/**
 		 * Format a field for crafting times
 		 */
-		embed.addField('—', `\u200b\n:hourglass_flowing_sand: **Crafting Times**\n\nThe rarity of the resulting item depends on the CR of the essence used in crafting.\n\n${process.env.COMMON} \`Common (CR 0–3)\` – 1 week\n${process.env.UNCOMMON} \`Uncommon (CR 4–8)\` – 2 weeks\n${process.env.RARE} \`Rare (CR 9–12)\` – 5 weeks\n${process.env.VERYRARE} \`Very Rare (CR 13–18)\` – 10 weeks\n${process.env.LEGENDARY} \`Legendary (CR 19+)\` – 20 weeks`, true );
+		embed.addField('—', `\u200b\n:hourglass_flowing_sand: **Crafting Times**\n\nThe rarity of the resulting item depends on the CR of the essence used in crafting.\n\n${process.env.COMMON} \`Common (CR 0–3)\` – 1 week\n${process.env.UNCOMMON} \`Uncommon (CR 4–8)\` – 2 weeks\n${process.env.RARE} \`Rare (CR 9–12)\` – 5 weeks\n${process.env.VERYRARE} \`Very Rare (CR 13–18)\` – 10 weeks\n${process.env.LEGENDARY} \`Legendary (CR 19+)\` – 20 weeks\n\nFill in a [commission request](https://toinen.world/commissions/) to notify a DM if you'd like to have an item commissioned.`, true );
 
 		/**
 		 * Reply to message and load player details

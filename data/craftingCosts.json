@@ -1,12 +1,12 @@
 {
     "Ammunition"    : 40,
-    "Armor"         : 600,
+    "Armor*"        : 600,
     "Rings"         : 560,
     "Rods"          : 400,
-    "Shields"       : 400,
+    "Shields*"      : 400,
     "Spell Gems"    : 320,
     "Staffs"        : 360,
     "Wands"         : 480,
-    "Weapons"       : 520,
+    "Weapons*"      : 520,
     "Wondrous Items": 400
 }
