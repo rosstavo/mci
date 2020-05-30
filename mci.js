@@ -214,7 +214,7 @@ bot.on('message', async message => {
     /**
      * Guild members shouldn't be able to fire the restock command via messages
      */
-    if (command.name === 'restock') {
+    if ( command && command.name === 'restock') {
         message.reply(fn.formatDialogue(fn.arrayRand(dialogue.error_generic)));
 
         return;

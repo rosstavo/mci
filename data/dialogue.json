@@ -4,6 +4,12 @@
         "Nae problem. One %s, that'll be %s gold piece.",
         "The %s? That's a fine choice, aye. %s gold piece please pal."
     ],
+    "cancellation": [
+        "Ye got hauf minut tae change yer mind, jus speak `cancel`."
+    ],
+    "cancelled_order": [
+        "Awright, I'll put 'er back on the shelf."
+    ],
     "error_generic": [
         "Sorry wean, ah’m no sure what yer askin.",
         "Ah didnae catch that, sorry pal. Could ye try speakin a wee bit clearer?",
